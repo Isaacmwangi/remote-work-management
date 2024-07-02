@@ -1,0 +1,83 @@
+// Final_Project\remote-work-management\prisma\schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String
+  email     String   @unique
+  password  String
+  role      String
+  profile   Profile?
+  JobListing JobListing[]
+  Application Application[]
+  Teams     Team[]    @relation("EmployerTeams")
+  Tasks     Task[]    @relation("AssignedTasks")
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  user_id   Int      @unique
+  resume    String?
+  experience String?
+  User      User     @relation(fields: [user_id], references: [id])
+}
+
+model JobListing {
+  id          Int      @id @default(autoincrement())
+  employer_id Int
+  title       String
+  description String
+  requirements String
+  location    String
+  Employer    User     @relation(fields: [employer_id], references: [id])
+  Application Application[]
+}
+
+model Application {
+  id            Int      @id @default(autoincrement())
+  job_id        Int
+  job_seeker_id Int
+  status        String
+  applied_on    DateTime @default(now())
+  JobListing    JobListing @relation(fields: [job_id], references: [id])
+  JobSeeker     User     @relation(fields: [job_seeker_id], references: [id])
+}
+
+model Team {
+  id          Int      @id @default(autoincrement())
+  employer_id Int
+  name        String
+  description String
+  Employer    User     @relation(fields: [employer_id], references: [id], name: "EmployerTeams")
+  Project     Project[]
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  team_id     Int
+  name        String
+  description String
+  status      String
+  Team        Team     @relation(fields: [team_id], references: [id])
+  Task        Task[]
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  project_id  Int
+  assigned_to Int
+  title       String
+  description String
+  status      String
+  due_date    DateTime
+  Project     Project  @relation(fields: [project_id], references: [id])
+  AssignedTo  User     @relation(fields: [assigned_to], references: [id], name: "AssignedTasks")
+}
