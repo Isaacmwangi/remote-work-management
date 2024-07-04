@@ -1,7 +1,7 @@
 const { prisma } = require('../config/db');
 
 const getUserProfile = async (req, res) => {
-  const { userId } = req.user;
+  const userId = req.user.id;
 
   try {
     const user = await prisma.user.findUnique({
@@ -20,7 +20,7 @@ const getUserProfile = async (req, res) => {
 };
 
 const updateUserProfile = async (req, res) => {
-  const { userId } = req.user;
+  const userId = req.user.id;
   const { resume, skills, experience } = req.body;
 
   try {
@@ -36,7 +36,20 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      include: { profile: true },
+    });
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Error retrieving users' });
+  }
+};
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
 };

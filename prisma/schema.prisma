@@ -1,83 +1,95 @@
-// Final_Project\remote-work-management\prisma\schema.prisma
-
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String
-  email     String   @unique
-  password  String
-  role      String
-  profile   Profile?
-  JobListing JobListing[]
-  Application Application[]
-  Teams     Team[]    @relation("EmployerTeams")
-  Tasks     Task[]    @relation("AssignedTasks")
+  id          Int          @id @default(autoincrement())
+  username    String
+  email       String       @unique
+  password    String
+  role        String
+  profiles    Profile[]
+  jobListings JobListing[]
+  applications Application[]
+  teams       Team[]
+  tasks       Task[]
+  sentMessages Message[]   @relation("SentMessages")
 }
 
 model Profile {
-  id        Int      @id @default(autoincrement())
-  user_id   Int      @unique
-  resume    String?
-  experience String?
-  User      User     @relation(fields: [user_id], references: [id])
+  id          Int     @id @default(autoincrement())
+  user_id     Int     @unique
+  resume      String?
+  skills      String
+  experience  String
+  user        User    @relation(fields: [user_id], references: [id])
 }
 
 model JobListing {
-  id          Int      @id @default(autoincrement())
-  employer_id Int
+  id          Int          @id @default(autoincrement())
   title       String
   description String
   requirements String
   location    String
-  Employer    User     @relation(fields: [employer_id], references: [id])
-  Application Application[]
+  employer_id Int
+  employer    User         @relation(fields: [employer_id], references: [id])
+  applications Application[]
 }
 
 model Application {
-  id            Int      @id @default(autoincrement())
-  job_id        Int
+  id          Int         @id @default(autoincrement())
+  job_id      Int
   job_seeker_id Int
-  status        String
-  applied_on    DateTime @default(now())
-  JobListing    JobListing @relation(fields: [job_id], references: [id])
-  JobSeeker     User     @relation(fields: [job_seeker_id], references: [id])
+  status      String
+  applied_on  DateTime
+  jobListing  JobListing  @relation(fields: [job_id], references: [id])
+  jobSeeker   User        @relation(fields: [job_seeker_id], references: [id])
 }
 
 model Team {
-  id          Int      @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   employer_id Int
   name        String
   description String
-  Employer    User     @relation(fields: [employer_id], references: [id], name: "EmployerTeams")
-  Project     Project[]
+  employer    User        @relation(fields: [employer_id], references: [id])
+  projects    Project[]
+  messages    Message[]
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   team_id     Int
   name        String
   description String
   status      String
-  Team        Team     @relation(fields: [team_id], references: [id])
-  Task        Task[]
+  team        Team    @relation(fields: [team_id], references: [id])
+  tasks       Task[]
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   project_id  Int
   assigned_to Int
   title       String
   description String
   status      String
   due_date    DateTime
-  Project     Project  @relation(fields: [project_id], references: [id])
-  AssignedTo  User     @relation(fields: [assigned_to], references: [id], name: "AssignedTasks")
+  project     Project @relation(fields: [project_id], references: [id])
+  assignedUser User    @relation(fields: [assigned_to], references: [id])
+}
+
+model Message {
+  id          Int      @id @default(autoincrement())
+  team_id     Int
+  sender_id   Int
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  team        Team     @relation(fields: [team_id], references: [id])
+  sender      User     @relation("SentMessages", fields: [sender_id], references: [id])
 }
