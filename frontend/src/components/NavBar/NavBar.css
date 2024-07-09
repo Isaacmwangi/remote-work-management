@@ -1,0 +1,35 @@
+
+.navbar {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 1rem;
+  color: white;
+  box-sizing: border-box; /* Ensure padding and border don't add to the width */
+}
+
+.navbar-left {
+  flex: 1; /* Takes up remaining space */
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 0 1rem;
+}
+
+.navbar button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+

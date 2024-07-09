@@ -1,0 +1,31 @@
+/* src/components/Profile/Profile.css */
+.profile {
+    padding: 20px;
+  }
+  
+  .profile h2 {
+    color: #333;
+  }
+  
+  .profile p {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .profile label {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  .profile input {
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  .profile button {
+    padding: 10px;
+    background-color: #61dafb;
+    border: none;
+    cursor: pointer;
+  }
+  
