@@ -1,4 +1,5 @@
-//src/middleware/authMiddleware.js
+// Final_Project/remote-work-management-backend/src/middleware/authMiddleware.js
+
 const jwt = require('jsonwebtoken');
 const { prisma } = require('../config/db');
 
@@ -13,15 +14,15 @@ const authMiddleware = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: { id: decoded.id },
-      include: { profile: true, notifications: true }, 
     });
 
-    if (!req.user) {
+    if (!user) {
       return res.status(401).json({ message: 'User not found' });
     }
 
+    req.user = user; 
     next();
   } catch (error) {
     res.status(401).json({ message: 'Token is not valid' });

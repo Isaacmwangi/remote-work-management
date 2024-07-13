@@ -1,7 +1,8 @@
+// Final_Project/frontend/src/components/Auth/Login/Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import './Login.css';
 
@@ -14,15 +15,27 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await axios.post('http://localhost:5173/api/auth/login', { email, password });
       login(response.data.token);
       toast.success('Logged in successfully');
       navigate('/dashboard');
     } catch (error) {
-      toast.error('Error logging in');
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error(error.response.data); // Log the detailed error response from backend
+        toast.error(error.response.data.error || 'Failed to log in');
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error(error.request);
+        toast.error('No response received from server');
+      } else {
+        // Something happened in setting up the request that triggered an error
+        console.error('Error during request setup:', error.message);
+        toast.error('Error during login');
+      }
     }
   };
-
+  
   return (
     <div className="container">
       <div className="login-form">
@@ -44,6 +57,11 @@ const LoginPage = () => {
           />
           <button type="submit">Login</button>
         </form>
+        <div>
+          <p>
+            Don't have an account? <Link to="/register">Register</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

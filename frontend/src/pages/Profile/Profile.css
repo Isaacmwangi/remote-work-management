@@ -1,31 +1,49 @@
 /* src/components/Profile/Profile.css */
-.profile {
-    padding: 20px;
-  }
-  
-  .profile h2 {
-    color: #333;
-  }
-  
-  .profile p {
-    font-size: 16px;
-    color: #666;
-  }
-  
-  .profile label {
-    display: block;
-    margin: 10px 0;
-  }
-  
-  .profile input {
-    padding: 8px;
-    margin-top: 5px;
-  }
-  
-  .profile button {
-    padding: 10px;
-    background-color: #61dafb;
-    border: none;
-    cursor: pointer;
-  }
-  
+.profile-container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background-color: #f9f9f9;
+}
+
+.profile-info {
+	margin-bottom: 20px;
+}
+
+.profile-field {
+	margin-bottom: 15px;
+}
+
+.profile-field label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+.profile-field input,
+.profile-field select {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.profile-actions {
+	text-align: center;
+}
+
+.profile-actions button {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: white;
+	cursor: pointer;
+	margin: 5px;
+}
+
+.profile-actions button:hover {
+	background-color: #0056b3;
+}

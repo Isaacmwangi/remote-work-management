@@ -1,4 +1,3 @@
-// Final_Project/remote-work-management/src/index.js
 
 require('dotenv').config();
 const express = require('express');
@@ -24,7 +23,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
+app.use('/api', userRoutes);
 app.use('/api/joblistings', jobListingRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);

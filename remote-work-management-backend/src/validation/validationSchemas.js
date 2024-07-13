@@ -6,7 +6,7 @@ const registerSchema = Joi.object({
   username: Joi.string().min(3).max(30).required(),
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
-  role: Joi.string().valid('user', 'admin').required()
+  role: Joi.string().valid('JOB_SEEKER', 'EMPLOYER', 'ADMIN').required()
 });
 
 // Validation schema for user login

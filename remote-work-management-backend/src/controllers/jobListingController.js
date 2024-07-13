@@ -23,7 +23,13 @@ const createJobListing = async (req, res) => {
 
 const getJobListings = async (req, res) => {
   try {
-    const jobListings = await prisma.jobListing.findMany();
+    const jobListings = await prisma.jobListing.findMany({
+      include: {
+        employer: {
+          select: { username: true }
+        }
+      }
+    });
     res.json(jobListings);
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving job listings' });
@@ -36,6 +42,11 @@ const getJobListingById = async (req, res) => {
   try {
     const jobListing = await prisma.jobListing.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        employer: {
+          select: { username: true }
+        }
+      }
     });
 
     if (!jobListing) {

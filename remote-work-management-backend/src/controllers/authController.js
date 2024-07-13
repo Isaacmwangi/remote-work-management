@@ -5,13 +5,21 @@ const { registerSchema, loginSchema } = require('../validation/validationSchemas
 
 const register = async (req, res) => {
   try {
-    // Validate request body
     const { error } = registerSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
 
     const { username, email, password, role } = req.body;
+
+    // Check if email already exists
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email is already registered' });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
@@ -30,9 +38,9 @@ const register = async (req, res) => {
   }
 };
 
+
 const login = async (req, res) => {
   try {
-    // Validate request body
     const { error } = loginSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
@@ -63,8 +71,18 @@ const login = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    res.clearCookie('token'); // Clear token from cookies if using cookies
+    res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Error logging out:', error);
+    res.status(500).json({ error: 'Error logging out' });
+  }
+};
 
 module.exports = {
   register,
   login,
+  logout,
 };

@@ -1,3 +1,4 @@
+
 const { registerSchema, loginSchema } = require('../validation/validationSchemas');
 
 const validateRegister = (req, res, next) => {

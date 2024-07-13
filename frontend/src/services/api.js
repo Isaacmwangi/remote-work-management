@@ -1,5 +1,3 @@
-// remote-work-management-frontend/src/services/authService.js
-
 import axios from 'axios';
 
 const apiUrl = process.env.REACT_APP_API_URL;

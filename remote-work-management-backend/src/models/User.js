@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs');
 const { prisma } = require('../config/db');
 
 const User = {
-  // Create a new user
   create: async (newUser) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(newUser.password, salt);
@@ -15,6 +14,9 @@ const User = {
           role: newUser.role,
           location: newUser.location,
           address: newUser.address,
+          resume: newUser.resume,
+          tasks: newUser.tasks,
+          completedTasks: newUser.completedTasks,
         },
       });
       return user;
@@ -23,99 +25,77 @@ const User = {
     }
   },
 
-  // Find user by ID
   findById: async (id) => {
     try {
       const user = await prisma.user.findUnique({
-        where: { id: id },
-        include: { profile: true, notifications: true }, 
+        where: { id },
+        include: { profile: true, notifications: true, tasks: true, completedTasks: true },
       });
       if (!user) {
         throw new Error('User not found');
       }
       return user;
     } catch (error) {
-      throw new Error('Error retrieving user by ID');
+      throw new Error('Error retrieving user');
     }
   },
 
-  // Find user by email
   findByEmail: async (email) => {
     try {
       const user = await prisma.user.findUnique({
-        where: { email: email },
+        where: { email },
+        include: { profile: true, notifications: true, tasks: true, completedTasks: true },
       });
       if (!user) {
         throw new Error('User not found');
       }
       return user;
     } catch (error) {
-      throw new Error('Error retrieving user by email');
+      throw new Error('Error retrieving user');
     }
   },
 
-  // Update user profile
-  update: async (id, updatedUser) => {
+  update: async (id, updates) => {
     try {
-      const { username, email, role, location, address, password } = updatedUser;
-      let updatedData = { username, email, role, location, address };
-
-      // If password is provided, hash it and add to the update data
-      if (password) {
+      if (updates.password) {
         const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
-        updatedData.password = hashedPassword;
+        updates.password = bcrypt.hashSync(updates.password, salt);
       }
-
       const user = await prisma.user.update({
-        where: { id: id },
-        data: updatedData,
+        where: { id },
+        data: updates,
+        include: { profile: true, notifications: true, tasks: true, completedTasks: true },
       });
       return user;
     } catch (error) {
-      throw new Error('Error updating user profile');
+      throw new Error('Error updating user');
     }
   },
 
-  // Delete user
   delete: async (id) => {
     try {
-      await prisma.user.delete({
-        where: { id: id },
+      const user = await prisma.user.delete({
+        where: { id },
+        include: { profile: true, notifications: true, tasks: true, completedTasks: true },
       });
-      return { message: 'User deleted successfully' };
+      return user;
     } catch (error) {
       throw new Error('Error deleting user');
     }
   },
 
-  // Find all users
-  findAll: async () => {
-    try {
-      const users = await prisma.user.findMany({
-        include: { profile: true, notifications: true }, // Include related data if needed
-      });
-      return users;
-    } catch (error) {
-      throw new Error('Error retrieving all users');
-    }
-  },
-
-  // Authenticate user (for login)
   authenticate: async (email, password) => {
     try {
       const user = await prisma.user.findUnique({
-        where: { email: email },
+        where: { email },
       });
       if (!user) {
-        throw new Error('User not found');
+        throw new Error('Invalid email or password');
       }
-
-      const isMatch = bcrypt.compareSync(password, user.password);
-      if (!isMatch) {
-        throw new Error('Invalid password');
+      const isValidPassword = bcrypt.compareSync(password, user.password);
+      if (!isValidPassword) {
+        throw new Error('Invalid email or password');
       }
-
       return user;
     } catch (error) {
       throw new Error('Error authenticating user');

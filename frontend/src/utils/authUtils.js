@@ -1,5 +1,4 @@
-
-// src/utils/authUtils.js
+// authUtils.js
 import axios from 'axios';
 
 const auth = axios.create({
@@ -10,3 +9,4 @@ const auth = axios.create({
 });
 
 export default auth;
+
