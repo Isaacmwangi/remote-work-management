@@ -1,8 +1,24 @@
-# React + Vite
+# Remote Work Management - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the frontend repository for Remote Work Management! This project aims to streamline remote team management through intuitive user interfaces and seamless integration with backend services.
 
-Currently, two official plugins are available:
+## Screenshots
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Home Page
+![Home Page](./frontend/src/assets/Screenshot_Home.jpg)
+
+### Registration Page
+If you are a new user, click on "Get Started" or "Register" to create an account.
+![Registration Page](./frontend/src/assets/Screenshot_registerPage.jpg)
+
+### Login Page
+After registration, proceed to the login page to access your account.
+![Login Page](./frontend/src/assets/Screenshot_loginPage.jpg)
+
+### Dashboard
+Upon successful login, you will be directed to the dashboard where you can manage your profile, view job listings, and more.
+![Dashboard](./frontend/src/assets/Screenshot_Dashboard.jpg)
+
+## Getting Started
+
+1. Clone this repository:
