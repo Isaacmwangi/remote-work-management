@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import './Register.css';
 
@@ -52,6 +52,11 @@ const Register = () => {
           />
           <button type="submit">Register</button>
         </form>
+        <div>
+          <p>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
       </div>
     </div>
   );
