@@ -9,10 +9,12 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("JOB_SEEKER"); // Default to JOB_SEEKER or EMPLOYER
+  const [role, setRole] = useState("JOB_SEEKER"); // Default to JOB_SEEKER
   const [resume, setResume] = useState(null); // State to hold resume file
   const [country, setCountry] = useState(""); // Optional field
   const [location, setLocation] = useState(""); // Optional field
+  const [company, setCompany] = useState(""); // Optional field for employers
+  const [isPrivateEntity, setIsPrivateEntity] = useState(false); // New state for private entities
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -33,6 +35,10 @@ const Register = () => {
       }
       if (location) {
         formData.append("location", location);
+      }
+      if (role === "EMPLOYER") {
+        formData.append("company", company);
+        formData.append("isPrivateEntity", isPrivateEntity);
       }
 
       await axios.post("/api/auth/register", formData, {
@@ -86,6 +92,24 @@ const Register = () => {
             <option value="JOB_SEEKER">Job Seeker</option>
             <option value="EMPLOYER">Employer</option>
           </select>
+          {role === "EMPLOYER" && (
+            <>
+              <input
+                type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Company or Organization"
+              />
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isPrivateEntity}
+                  onChange={(e) => setIsPrivateEntity(e.target.checked)}
+                />
+                Private Entity
+              </label>
+            </>
+          )}
           <input
             type="file"
             onChange={(e) => setResume(e.target.files[0])}
@@ -114,3 +138,4 @@ const Register = () => {
 };
 
 export default Register;
+

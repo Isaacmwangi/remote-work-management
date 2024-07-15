@@ -92,3 +92,4 @@ const AvailableJobs = ({ onJobCountChange }) => {
 };
 
 export default AvailableJobs;
+

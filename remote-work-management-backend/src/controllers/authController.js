@@ -6,7 +6,7 @@ const { registerSchema, loginSchema } = require('../validation/validationSchemas
 
 const register = async (req, res) => {
   try {
-    const { username, email, password, role, country, location, address } = req.body;
+    const { username, email, password, role, country, location, address, company, isPrivate } = req.body;
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -33,16 +33,21 @@ const register = async (req, res) => {
         location,
         address,
         resume: resumePath,
+        company: role === "EMPLOYER" ? company : null, 
+        isPrivate: role === "EMPLOYER" ? isPrivate : null 
       },
     });
+    
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
 
-    res.status(201).json(user);
+    res.status(201).json({ token });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).json({ error: "Error creating user" });
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 };
-
 
 
 const login = async (req, res) => {
@@ -79,41 +84,15 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie('token'); // Clear token from cookies if using cookies
-    res.status(200).json({ message: 'Logout successful' });
+    res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.error('Error logging out:', error);
     res.status(500).json({ error: 'Error logging out' });
   }
 };
 
-const updateProfile = async (req, res) => {
-  try {
-    const { username, email, location, address, role, country } = req.body;
-    const userId = req.user.id; // Assuming user ID is available in req.user from authentication middleware
-
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: {
-        username,
-        email,
-        location,
-        address,
-        role,
-        country,
-      },
-    });
-
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    console.error("Error updating profile:", error);
-    res.status(500).json({ error: "Failed to update profile" });
-  }
-};
-
 module.exports = {
   register,
   login,
-  logout,
-  updateProfile,
+  logout
 };

@@ -18,7 +18,7 @@ const Profile = () => {
     tasks: [],
     sentMessages: [],
     notifications: [],
-    company: "", 
+    company: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -68,7 +68,9 @@ const Profile = () => {
       formData.append("address", profile.address);
       formData.append("role", profile.role);
       formData.append("country", profile.country);
-      formData.append("company", profile.company); // Add company to form data
+      formData.append("company", profile.company);
+      formData.append("isPrivateEntity", profile.isPrivateEntity);
+
       if (profile.resume) {
         formData.append("resume", profile.resume);
       }
@@ -91,28 +93,12 @@ const Profile = () => {
     }
   };
 
-  const handleDeleteResume = async () => {
-    try {
-      await axios.delete("/api/profile/resume", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
-      toast.success("Resume deleted successfully");
-      setProfile((prevProfile) => ({
-        ...prevProfile,
-        resume: null,
-      }));
-    } catch (error) {
-      console.error("Error deleting resume:", error);
-      toast.error("Failed to delete resume");
-    }
-  };
-
   const viewResume = () => {
     if (profile.resume instanceof File) {
       const url = URL.createObjectURL(profile.resume);
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     } else if (profile.resume) {
-      window.open(profile.resume, '_blank');
+      window.open(profile.resume, "_blank");
     } else {
       console.error("Resume file not found or invalid");
       toast.error("Resume file not found or invalid");
@@ -212,6 +198,13 @@ const Profile = () => {
             <span>{profile.company}</span>
           )}
         </div>
+        <div className="profile-field">
+          <label>Employment Type:</label>
+          <span>
+            {profile.isPrivateEntity ? "Own Business" : profile.company}
+          </span>
+        </div>
+
         {profile.resume && (
           <div className="profile-field">
             <label>Resume:</label>
@@ -295,4 +288,3 @@ const Profile = () => {
 };
 
 export default Profile;
-

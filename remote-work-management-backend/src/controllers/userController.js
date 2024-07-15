@@ -31,31 +31,36 @@ const getUserProfile = async (req, res) => {
 
 
 const updateUserProfile = async (req, res) => {
-	const userId = req.user.id;
-	const { username, email, location, address, role, country } = req.body;
+  const userId = req.user.id;
+  const { username, email, location, address, role, country, company, isPrivateEntity } = req.body;
 
-	let updatedUser = { username, email, location, address, role, country };
+  let updatedUser = { username, email, location, address, role, country, company, isPrivateEntity };
 
-	try {
-		const user = await prisma.user.update({
-			where: { id: userId },
-			data: updatedUser,
-			include: {
-				profiles: true,
-				jobListings: true,
-				applications: true,
-				teams: true,
-				tasks: true,
-				sentMessages: true,
-				notifications: true,
-			},
-		});
-		res.json(user);
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: "Error updating user profile" });
-	}
+  try {
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: updatedUser,
+      include: {
+        profiles: true,
+        jobListings: true,
+        applications: true,
+        teams: true,
+        tasks: true,
+        sentMessages: true,
+        notifications: true,
+      },
+    });
+    res.json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error updating user profile" });
+  }
 };
+
+
+
+
+
 
 const getAllUsers = async (req, res) => {
   try {

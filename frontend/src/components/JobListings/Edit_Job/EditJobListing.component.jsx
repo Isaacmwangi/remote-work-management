@@ -8,6 +8,8 @@ const EditJobListing = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
+  const [company, setCompany] = useState('');
+  const [organization, setOrganization] = useState('');
 
   useEffect(() => {
     fetchJobListing();
@@ -20,6 +22,8 @@ const EditJobListing = () => {
       setTitle(response.data.title);
       setDescription(response.data.description);
       setLocation(response.data.location);
+      setCompany(response.data.company || '');
+      setOrganization(response.data.organization || '');
     } catch (error) {
       console.error('Error fetching job listing:', error);
     }
@@ -32,6 +36,8 @@ const EditJobListing = () => {
         title,
         description,
         location,
+        company,
+        organization,
       });
       alert('Job listing updated successfully!');
     } catch (error) {
@@ -52,6 +58,12 @@ const EditJobListing = () => {
         <br />
         <label>Location:</label>
         <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
+        <br />
+        <label>Company:</label>
+        <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
+        <br />
+        <label>Organization:</label>
+        <input type="text" value={organization} onChange={(e) => setOrganization(e.target.value)} />
         <br />
         <button type="submit">Update Job Listing</button>
       </form>

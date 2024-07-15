@@ -1,12 +1,12 @@
 /* Profile.css */
 
 .profile-container {
-	max-width: 600px;
-	margin: 0 auto;
+	max-width: 800px;
+	margin: 20px auto;
 	padding: 20px;
-	border: 1px solid #ccc;
+	border: 1px solid #ddd;
 	border-radius: 10px;
-	background-color: #f9f9f9;
+	background-color: #fff;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
@@ -16,30 +16,31 @@
   
   .profile-field {
 	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
   }
   
   .profile-field label {
 	font-weight: bold;
 	margin-right: 10px;
-	display: inline-block;
-	width: 120px; /* Adjust as needed for label length */
+	min-width: 120px;
   }
   
   .profile-field input,
   .profile-field select {
-	padding: 8px;
+	flex: 1;
+	padding: 10px; /* Adjusted padding for better spacing */
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	width: calc(100% - 130px); /* Adjust for label width */
 	box-sizing: border-box;
   }
   
   .profile-field select {
-	width: 100%; /* Full width for selects */
+	width: 100%;
   }
   
   .profile-field button {
-	padding: 8px 15px;
+	padding: 10px 20px; /* Increased padding for better clickability */
 	border: none;
 	border-radius: 5px;
 	background-color: #007bff;
@@ -63,6 +64,9 @@
   
   .related-entities h2 {
 	margin-bottom: 15px;
+	font-size: 1.5rem;
+	border-bottom: 1px solid #ccc;
+	padding-bottom: 10px;
   }
   
   .related-entities div {
@@ -71,15 +75,35 @@
   
   .related-entities h3 {
 	margin-bottom: 10px;
+	font-size: 1.2rem;
   }
   
   .related-entities ol,
   .related-entities ul {
-	list-style-type: none;
-	padding-left: 0;
+	padding-left: 20px;
   }
   
   .related-entities li {
 	margin-bottom: 5px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+	.profile-container {
+	  padding: 15px;
+	}
+  
+	.profile-field {
+	  flex-direction: column;
+	}
+  
+	.profile-field label {
+	  margin-bottom: 5px;
+	}
+  
+	.profile-field input,
+	.profile-field select {
+	  width: 100%;
+	}
   }
   
