@@ -199,7 +199,6 @@ const Profile = () => {
             <span>{profile.role}</span>
           )}
         </div>
-        {/* New field for company/organization */}
         <div className="profile-field">
           <label>Company/Organization:</label>
           {isEditing ? (
