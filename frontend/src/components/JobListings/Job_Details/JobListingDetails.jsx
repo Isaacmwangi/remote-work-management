@@ -47,7 +47,9 @@ const JobDetails = () => {
     <div className={styles.container}>
       <h2>Job Details</h2>
       <h3>Title: {job.title}</h3>
-      <p>Description: {job.description}</p>
+      <h3>Company:{job.company}</h3>
+
+<p>Description: {job.description}</p>
       <p>Location: {job.location}</p>
       <p><strong>Posted by:</strong> {job.employer?.username || 'Unknown'}</p>
       <p><strong>Contact Email:</strong> {user.email || 'Email not available'}</p>

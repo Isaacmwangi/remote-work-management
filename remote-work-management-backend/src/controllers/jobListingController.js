@@ -53,11 +53,14 @@ const getJobListingById = async (req, res) => {
       return res.status(404).json({ message: 'Job listing not found' });
     }
 
+    console.log('Job Listing:', jobListing); 
     res.json(jobListing);
   } catch (error) {
+    console.error('Error retrieving job listing:', error);
     res.status(500).json({ error: 'Error retrieving job listing' });
   }
 };
+
 
 
 

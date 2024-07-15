@@ -1,36 +1,13 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./Dashboard.css";
 import AvailableJobs from "../JobListings/Available_Jobs/AvailableJobs";
 
 const Dashboard = () => {
-  const [user, setUser] = useState({ username: "User" });
+  const [jobCount, setJobCount] = useState(0);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-        const response = await axios.get("/api/users/profile", config);
-        setUser(response.data);
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        if (error.response) {
-          console.error("Server Error:", error.response.data);
-        } else if (error.request) {
-          console.error("Request Error:", error.request);
-        } else {
-          console.error("Error Message:", error.message);
-        }
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  if (!user.username) return <div>Loading...</div>;
+  const handleJobCountChange = (count) => {
+    setJobCount(count);
+  };
 
   return (
     <div className="dashboard">
@@ -46,7 +23,7 @@ const Dashboard = () => {
         </div>
         <div className="stat-card">
           <h2>Team Members</h2>
-          <p> 5 Active</p>
+          <p>5 Active</p>
         </div>
         <div className="stat-card">
           <h2>Tasks Completed</h2>
@@ -54,12 +31,12 @@ const Dashboard = () => {
         </div>
         <div className="stat-card">
           <h2>Available Jobs</h2>
-          <p>10 Jobs</p> {/* Change this line to dynamically fetch job count */}
+          <p>{jobCount} Jobs</p>
         </div>
       </section>
 
       <section className="dashboard-content">
-        <AvailableJobs />
+        <AvailableJobs onJobCountChange={handleJobCountChange} />
       </section>
     </div>
   );

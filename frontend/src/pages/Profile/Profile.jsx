@@ -4,21 +4,22 @@ import { toast } from "react-toastify";
 import "./Profile.css";
 
 const Profile = () => {
-const [profile, setProfile] = useState({
-  username: "",
-  email: "",
-  location: "",
-  address: "",
-  role: "",
-  country: "",
-  resume: null,
-  jobListings: [],
-  applications: [],
-  teams: [],
-  tasks: [],
-  sentMessages: [],
-  notifications: [],
-});
+  const [profile, setProfile] = useState({
+    username: "",
+    email: "",
+    location: "",
+    address: "",
+    role: "",
+    country: "",
+    resume: null,
+    jobListings: [],
+    applications: [],
+    teams: [],
+    tasks: [],
+    sentMessages: [],
+    notifications: [],
+    company: "", 
+  });
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -34,7 +35,6 @@ const [profile, setProfile] = useState({
         toast.error("Failed to fetch profile");
       }
     };
-    
 
     fetchProfile();
   }, []);
@@ -68,19 +68,19 @@ const [profile, setProfile] = useState({
       formData.append("address", profile.address);
       formData.append("role", profile.role);
       formData.append("country", profile.country);
+      formData.append("company", profile.company); // Add company to form data
       if (profile.resume) {
         formData.append("resume", profile.resume);
       }
-  
+
       const response = await axios.put("/api/profile", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-  
+
       if (response.status === 200) {
         toast.success("Profile updated successfully");
         setIsEditing(false);
-  
-        // Fetch updated profile data after save
+
         fetchProfile();
       } else {
         toast.error("Failed to update profile");
@@ -90,8 +90,7 @@ const [profile, setProfile] = useState({
       toast.error("Failed to update profile");
     }
   };
-  
-  
+
   const handleDeleteResume = async () => {
     try {
       await axios.delete("/api/profile/resume", {
@@ -128,12 +127,11 @@ const [profile, setProfile] = useState({
           <label>Username:</label>
           {isEditing ? (
             <input
-            type="text"
-            name="username"
-            value={profile.username}
-            onChange={handleChange}
-          />
-          
+              type="text"
+              name="username"
+              value={profile.username}
+              onChange={handleChange}
+            />
           ) : (
             <span>{profile.username}</span>
           )}
@@ -201,7 +199,20 @@ const [profile, setProfile] = useState({
             <span>{profile.role}</span>
           )}
         </div>
-        
+        {/* New field for company/organization */}
+        <div className="profile-field">
+          <label>Company/Organization:</label>
+          {isEditing ? (
+            <input
+              type="text"
+              name="company"
+              value={profile.company}
+              onChange={handleChange}
+            />
+          ) : (
+            <span>{profile.company}</span>
+          )}
+        </div>
         {profile.resume && (
           <div className="profile-field">
             <label>Resume:</label>
@@ -228,8 +239,8 @@ const [profile, setProfile] = useState({
       ) : (
         <button onClick={handleEditToggle}>Edit Profile</button>
       )}
-      
-     <div className="related-entities">
+
+      <div className="related-entities">
         <h2>More Details</h2>
         <div>
           <h3>My Job Posts</h3>
@@ -285,3 +296,4 @@ const [profile, setProfile] = useState({
 };
 
 export default Profile;
+

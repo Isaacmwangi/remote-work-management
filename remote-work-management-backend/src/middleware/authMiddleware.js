@@ -1,4 +1,3 @@
-// Final_Project/remote-work-management-backend/src/middleware/authMiddleware.js
 
 const jwt = require('jsonwebtoken');
 const { prisma } = require('../config/db');

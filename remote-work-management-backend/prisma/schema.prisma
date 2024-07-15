@@ -16,23 +16,25 @@ enum Role {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  username String
-  email    String   @unique
-  password String
-  role     String
-  country  String?
-  location String?
-  resume   String?
-  address  String?
+  id           Int        @id @default(autoincrement())
+  username     String
+  email        String     @unique
+  password     String
+  role         String
+  country      String?
+  location     String?
+  resume       String?
+  address      String?
+  company      String?   
   profiles     Profile[]
   jobListings  JobListing[]
   applications Application[]
   teams        Team[]
   tasks        Task[]
-  sentMessages Message[]   @relation("SentMessages")
+  sentMessages Message[]  @relation("SentMessages")
   notifications Notification[]
 }
+
 
 model Notification {
   id        Int      @id @default(autoincrement())
