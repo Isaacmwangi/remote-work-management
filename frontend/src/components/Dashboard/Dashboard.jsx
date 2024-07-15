@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Dashboard.css";
-import { Link } from "react-router-dom";
+import AvailableJobs from "../JobListings/Available_Jobs/AvailableJobs";
 
 const Dashboard = () => {
-  const [jobs, setJobs] = useState([]);
   const [user, setUser] = useState({ username: "User" });
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get("/api/joblistings", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        setJobs(response.data.slice(0, 10)); // Show only top 10 jobs
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -39,15 +27,10 @@ const Dashboard = () => {
       }
     };
 
-    fetchJobs();
     fetchUser();
   }, []);
 
   if (!user.username) return <div>Loading...</div>;
-
-  const handleViewAll = () => {
-    window.location.href = "/joblistings"; // Navigate to all jobs page
-  };
 
   return (
     <div className="dashboard">
@@ -71,31 +54,12 @@ const Dashboard = () => {
         </div>
         <div className="stat-card">
           <h2>Available Jobs</h2>
-          <p>{jobs.length} Jobs</p>
+          <p>10 Jobs</p> {/* Change this line to dynamically fetch job count */}
         </div>
       </section>
 
       <section className="dashboard-content">
-        <h2>Available Jobs</h2>
-        <div className="job-cards">
-          {jobs.map((job) => (
-            <div key={job.id} className="job-card">
-              {/* Display job details */}
-              <h3>{job.title}</h3>
-              <p>{job.description}</p>
-              <p>
-                <strong>Location:</strong> {job.location}
-              </p>
-              <p>
-                <strong>Posted by:</strong>{" "}
-                {job.employer?.username || "Unknown"}
-              </p>
-              {/* Link to job details page */}
-              <Link to={`/joblistings/${job.id}`}>View Details</Link>
-            </div>
-          ))}
-        </div>
-        <button onClick={handleViewAll}>View All Jobs</button>
+        <AvailableJobs />
       </section>
     </div>
   );

@@ -13,32 +13,18 @@ const JobDetails = () => {
     const fetchJobListing = async () => {
       try {
         const response = await axios.get(`/api/joblistings/${id}`);
+        console.log('Job Data:', response.data); 
         setJob(response.data);
-        if (response.data.employer_id) {
-          fetchUserDetails(response.data.employer_id); 
-        }
+        setUser(response.data.employer); 
       } catch (error) {
         console.error('Error fetching job listing:', error);
       }
     };
-
-    fetchJobListing();
-  }, [id]); 
-
-  const fetchUserDetails = async (employerId) => {
-    try {
-      const token = localStorage.getItem('token'); 
-      const response = await axios.get(`/api/users/${employerId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setUser(response.data);
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-    }
-  };
   
+    fetchJobListing();
+  }, [id]);
+  
+
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this job listing?')) {
       try {

@@ -1,17 +1,30 @@
+
+
+
 const multer = require('multer');
 const path = require('path');
 
-// Multer configuration
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'uploads'));
   },
-  filename: (req, file, cb) => {
+  filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    cb(null, uniqueSuffix + '-' + file.originalname);
   },
 });
 
-const upload = multer({ storage });
+
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  if (!allowedTypes.includes(file.mimetype)) {
+    const error = new Error('Wrong file type');
+    error.code = 'FILE_TYPE';
+    return cb(error, false);
+  }
+  cb(null, true);
+};
+
+const upload = multer({ storage, fileFilter });
 
 module.exports = upload;

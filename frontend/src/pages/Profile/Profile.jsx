@@ -4,14 +4,22 @@ import { toast } from "react-toastify";
 import "./Profile.css";
 
 const Profile = () => {
-  const [profile, setProfile] = useState({
-    username: "",
-    email: "",
-    location: "",
-    address: "",
-    role: "",
-    resume: null,
-  });
+const [profile, setProfile] = useState({
+  username: "",
+  email: "",
+  location: "",
+  address: "",
+  role: "",
+  country: "",
+  resume: null,
+  jobListings: [],
+  applications: [],
+  teams: [],
+  tasks: [],
+  sentMessages: [],
+  notifications: [],
+});
+
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
@@ -23,8 +31,10 @@ const Profile = () => {
         setProfile(response.data);
       } catch (error) {
         console.error("Error fetching profile:", error);
+        toast.error("Failed to fetch profile");
       }
     };
+    
 
     fetchProfile();
   }, []);
@@ -57,21 +67,31 @@ const Profile = () => {
       formData.append("location", profile.location);
       formData.append("address", profile.address);
       formData.append("role", profile.role);
+      formData.append("country", profile.country);
       if (profile.resume) {
         formData.append("resume", profile.resume);
       }
-
-      await axios.put("/api/profile", formData, {
+  
+      const response = await axios.put("/api/profile", formData, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      toast.success("Profile updated successfully");
-      setIsEditing(false);
+  
+      if (response.status === 200) {
+        toast.success("Profile updated successfully");
+        setIsEditing(false);
+  
+        // Fetch updated profile data after save
+        fetchProfile();
+      } else {
+        toast.error("Failed to update profile");
+      }
     } catch (error) {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile");
     }
   };
-
+  
+  
   const handleDeleteResume = async () => {
     try {
       await axios.delete("/api/profile/resume", {
@@ -89,17 +109,12 @@ const Profile = () => {
   };
 
   const viewResume = () => {
-    // Check if profile.resume is a File object
     if (profile.resume instanceof File) {
-      // Create a URL for the file object
       const url = URL.createObjectURL(profile.resume);
-      // Open the URL in a new tab
       window.open(url, '_blank');
     } else if (profile.resume) {
-      // Handle case where resume is a path or URL
       window.open(profile.resume, '_blank');
     } else {
-      // Handle case where resume is not available
       console.error("Resume file not found or invalid");
       toast.error("Resume file not found or invalid");
     }
@@ -113,11 +128,12 @@ const Profile = () => {
           <label>Username:</label>
           {isEditing ? (
             <input
-              type="text"
-              name="username"
-              value={profile.username}
-              onChange={handleChange}
-            />
+            type="text"
+            name="username"
+            value={profile.username}
+            onChange={handleChange}
+          />
+          
           ) : (
             <span>{profile.username}</span>
           )}
@@ -133,6 +149,19 @@ const Profile = () => {
             />
           ) : (
             <span>{profile.email}</span>
+          )}
+        </div>
+        <div className="profile-field">
+          <label>Country:</label>
+          {isEditing ? (
+            <input
+              type="text"
+              name="country"
+              value={profile.country}
+              onChange={handleChange}
+            />
+          ) : (
+            <span>{profile.country}</span>
           )}
         </div>
         <div className="profile-field">
@@ -172,6 +201,7 @@ const Profile = () => {
             <span>{profile.role}</span>
           )}
         </div>
+        
         {profile.resume && (
           <div className="profile-field">
             <label>Resume:</label>
@@ -185,24 +215,70 @@ const Profile = () => {
         )}
         {isEditing && (
           <div className="profile-field">
-            <label>Upload New Resume:</label>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
-            />
+            <label>Upload Resume:</label>
+            <input type="file" onChange={handleFileChange} />
           </div>
         )}
       </div>
-      <div className="profile-actions">
-        {isEditing ? (
-          <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleEditToggle}>Cancel</button>
-          </>
-        ) : (
-          <button onClick={handleEditToggle}>Edit Profile</button>
-        )}
+      {isEditing ? (
+        <div className="profile-actions">
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleEditToggle}>Cancel</button>
+        </div>
+      ) : (
+        <button onClick={handleEditToggle}>Edit Profile</button>
+      )}
+      
+     <div className="related-entities">
+        <h2>More Details</h2>
+        <div>
+          <h3>My Job Posts</h3>
+          <ol>
+            {profile.jobListings.map((job) => (
+              <li key={job.id}>{job.title}</li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h3>Applications</h3>
+          <ol>
+            {profile.applications.map((application) => (
+              <li key={application.id}>{application.title}</li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h3>Teams</h3>
+          <ol>
+            {profile.teams.map((team) => (
+              <li key={team.id}>{team.name}</li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h3>Tasks</h3>
+          <ol>
+            {profile.tasks.map((task) => (
+              <li key={task.id}>{task.title}</li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h3>Sent Messages</h3>
+          <ol>
+            {profile.sentMessages.map((message) => (
+              <li key={message.id}>{message.content}</li>
+            ))}
+          </ol>
+        </div>
+        <div>
+          <h3>Notifications</h3>
+          <ol>
+            {profile.notifications.map((notification) => (
+              <li key={notification.id}>{notification.message}</li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   );

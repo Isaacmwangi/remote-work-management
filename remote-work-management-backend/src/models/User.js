@@ -12,11 +12,9 @@ const User = {
           email: newUser.email,
           password: hashedPassword,
           role: newUser.role,
+          country: newUser.country,
           location: newUser.location,
-          address: newUser.address,
           resume: newUser.resume,
-          tasks: newUser.tasks,
-          completedTasks: newUser.completedTasks,
         },
       });
       return user;

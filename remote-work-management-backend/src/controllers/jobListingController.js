@@ -44,7 +44,7 @@ const getJobListingById = async (req, res) => {
       where: { id: parseInt(id) },
       include: {
         employer: {
-          select: { username: true }
+          select: { id: true, username: true, email: true }  
         }
       }
     });
@@ -58,6 +58,8 @@ const getJobListingById = async (req, res) => {
     res.status(500).json({ error: 'Error retrieving job listing' });
   }
 };
+
+
 
 const updateJobListing = async (req, res) => {
   const { id } = req.params;

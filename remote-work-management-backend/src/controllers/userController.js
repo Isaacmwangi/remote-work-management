@@ -6,7 +6,6 @@ const path = require('path');
 
 const getUserProfile = async (req, res) => {
   const userId = req.user.id;
-
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -30,39 +29,32 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+
 const updateUserProfile = async (req, res) => {
-  const userId = req.user.id;
-  const { username, email, location, address, password } = req.body;
+	const userId = req.user.id;
+	const { username, email, location, address, role, country } = req.body;
 
-  let updatedUser = { username, email };
+	let updatedUser = { username, email, location, address, role, country };
 
-  if (location) updatedUser.location = location;
-  if (address) updatedUser.address = address;
-
-  try {
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      updatedUser.password = hashedPassword;
-    }
-
-    const user = await prisma.user.update({
-      where: { id: userId },
-      data: updatedUser,
-      include: {
-        profiles: true,
-        jobListings: true,
-        applications: true,
-        teams: true,
-        tasks: true,
-        sentMessages: true,
-        notifications: true,
-      },
-    });
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error updating user profile' });
-  }
+	try {
+		const user = await prisma.user.update({
+			where: { id: userId },
+			data: updatedUser,
+			include: {
+				profiles: true,
+				jobListings: true,
+				applications: true,
+				teams: true,
+				tasks: true,
+				sentMessages: true,
+				notifications: true,
+			},
+		});
+		res.json(user);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error updating user profile" });
+	}
 };
 
 const getAllUsers = async (req, res) => {
@@ -119,35 +111,34 @@ const getUserById = async (req, res) => {
 
 
 const uploadResume = async (req, res) => {
-  const userId = req.user.id;
+	const userId = req.user.id;
 
-  if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
-  }
+	if (!req.file) {
+		return res.status(400).json({ error: "No file uploaded" });
+	}
 
-  const resumePath = path.join('uploads', req.file.filename);
+	const resumePath = path.join("uploads", req.file.filename);
 
-  try {
-    const user = await prisma.user.update({
-      where: { id: userId },
-      data: { profiles: { update: { resume: resumePath } } },
-      include: {
-        profiles: true,
-        jobListings: true,
-        applications: true,
-        teams: true,
-        tasks: true,
-        sentMessages: true,
-        notifications: true,
-      },
-    });
-    res.json({ message: 'Resume uploaded successfully', user: { ...user, resume: resumePath } });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error uploading resume' });
-  }
+	try {
+		const user = await prisma.user.update({
+			where: { id: userId },
+			data: { resume: resumePath },
+			include: {
+				profiles: true,
+				jobListings: true,
+				applications: true,
+				teams: true,
+				tasks: true,
+				sentMessages: true,
+				notifications: true,
+			},
+		});
+		res.json({ message: "Resume uploaded successfully", user });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ error: "Error uploading resume" });
+	}
 };
-
 
 const deleteResume = async (req, res) => {
   const userId = req.user.id;
@@ -155,7 +146,7 @@ const deleteResume = async (req, res) => {
   try {
     const user = await prisma.user.update({
       where: { id: userId },
-      data: { profiles: { update: { resume: null } } },
+      data: { resume: null },
       include: {
         profiles: true,
         jobListings: true,
@@ -166,10 +157,10 @@ const deleteResume = async (req, res) => {
         notifications: true,
       },
     });
-    res.json({ message: 'Resume deleted successfully', user });
+    res.json({ message: "Resume deleted successfully", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error deleting resume' });
+    res.status(500).json({ error: "Error deleting resume" });
   }
 };
 
