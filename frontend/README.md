@@ -40,11 +40,11 @@ When you first open the application, you'll be greeted with the Home Page.
 ### Register or Login
 If you're new to the platform, click on the "Get Started" button to register.
 
-![Register Page](./src/assets/Screenshot_Register.jpg)
+![Register Page](./src/assets/Screenshot_RegisterPage.jpg)
 
 If you're already a user, click on the "Login" link to access your account.
 
-![Login Page](./src/assets/Screenshot_Login.jpg)
+![Login Page](./src/assets/Screenshot_LoginPage.jpg)
 
 ### Dashboard
 Upon successful login, you'll be redirected to your dashboard where you can manage all your remote work needs.
