@@ -153,3 +153,70 @@
 .btn:hover {
   opacity: 0.9;
 }
+
+/* Button Hover and Disabled States */
+button:hover {
+  background-color: #0056b3;
+}
+
+button.edit-button:hover {
+  background-color: #138496; /* Hover color for edit */
+}
+
+button.delete-button:hover {
+  background-color: #c82333; /* Hover color for delete */
+}
+
+button.upload-button:hover {
+  background-color: #218838; /* Hover color for upload */
+}
+
+button.cancel-button:hover {
+  background-color: #e0a800; /* Hover color for cancel */
+}
+
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.profile-container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Header */
+.profile-container h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Profile Information */
+.profile-info p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Form and Input Styles */
+input[type="text"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* File Input */
+input[type="file"] {
+  margin: 8px 0;
+}

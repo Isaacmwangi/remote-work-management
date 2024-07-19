@@ -77,7 +77,8 @@ const JobListingDetails = () => {
       <p className="job-description">{jobListing.description}</p>
       <p className="job-requirements"><strong>Requirements:</strong> {jobListing.requirements}</p>
       <p className="job-location"><strong>Location:</strong> {jobListing.location}</p>
-      <p className="job-posted-by"><strong>Posted by:</strong> {jobListing.employer.username} ({jobListing.employer.company})</p>
+      <p className="job-posted-by"><strong>Posted by:</strong> {jobListing.employer.username}</p>
+      <h3>{jobListing.employer.company}</h3>
 
       {currentUser && (currentUser.id === jobListing.employer.id || currentUser.role === 'ADMIN') && (
         <div className="actions">

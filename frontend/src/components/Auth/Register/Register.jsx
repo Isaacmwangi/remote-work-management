@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import "./Register.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "JOB_SEEKER",
+    role: "Select Role",
     location: "",
     address: "",
     country: "",
@@ -96,7 +97,9 @@ const Register = () => {
         <h2>Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="firstName">First Name</label>
+            <label htmlFor="firstName">
+              <b>First Name</b>
+            </label>
             <input
               type="text"
               id="firstName"
@@ -110,7 +113,9 @@ const Register = () => {
             <i className="fas fa-user"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="secondName">Second Name</label>
+            <label htmlFor="secondName">
+              <b>Second Name</b>
+            </label>
             <input
               type="text"
               id="secondName"
@@ -124,7 +129,9 @@ const Register = () => {
             <i className="fas fa-user"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">
+              <b>Username</b>
+            </label>
             <input
               type="text"
               id="username"
@@ -138,7 +145,9 @@ const Register = () => {
             <i className="fas fa-user"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">
+              <b>Email</b>
+            </label>
             <input
               type="email"
               id="email"
@@ -152,7 +161,9 @@ const Register = () => {
             <i className="fas fa-envelope"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">
+              <b>Password</b>
+            </label>
             <input
               type="password"
               id="password"
@@ -166,7 +177,9 @@ const Register = () => {
             <i className="fas fa-lock"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">
+              <b>Confirm Password</b>
+            </label>
             <input
               type="password"
               id="confirmPassword"
@@ -179,7 +192,9 @@ const Register = () => {
             <i className="fas fa-lock"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="role">Role</label>
+            <label htmlFor="role">
+              <b>Role</b>
+            </label>
             <select
               id="role"
               name="role"
@@ -195,7 +210,9 @@ const Register = () => {
             <i className="fas fa-user-tag"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="country">Country</label>
+            <label htmlFor="country">
+              <b>Country </b>(Optional)
+            </label>
             <input
               type="text"
               id="country"
@@ -208,12 +225,14 @@ const Register = () => {
             <i className="fas fa-globe"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location">
+              <b>Location</b> (Optional)
+            </label>
             <input
               type="text"
               id="location"
               name="location"
-              placeholder="Enter your location"
+              placeholder="Enter your location "
               value={formData.location}
               onChange={handleChange}
               autoComplete="address-level2"
@@ -221,12 +240,14 @@ const Register = () => {
             <i className="fas fa-map-marker-alt"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="address">Address</label>
+            <label htmlFor="address">
+              <b>Address</b>(Optional)
+            </label>
             <input
               type="text"
               id="address"
               name="address"
-              placeholder="Enter your address"
+              placeholder="Enter your address "
               value={formData.address}
               onChange={handleChange}
               autoComplete="street-address"
@@ -234,12 +255,14 @@ const Register = () => {
             <i className="fas fa-address-card"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="company">Company</label>
+            <label htmlFor="company">
+              <b>Company </b>(Optional)
+            </label>
             <input
               type="text"
               id="company"
               name="company"
-              placeholder="Enter your company name"
+              placeholder="Enter your company or Organization name "
               value={formData.company}
               onChange={handleChange}
               autoComplete="organization"
@@ -247,7 +270,9 @@ const Register = () => {
             <i className="fas fa-building"></i>
           </div>
           <div className="input-group">
-            <label htmlFor="resume">Upload Resume</label>
+            <label htmlFor="resume">
+              <b>Upload Resume </b>(Optional)
+            </label>
             <input
               type="file"
               id="resume"
@@ -270,4 +295,3 @@ const Register = () => {
 };
 
 export default Register;
-

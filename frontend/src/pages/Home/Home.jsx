@@ -1,23 +1,8 @@
 // src/pages/Home.jsx
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import "./Home.css";
 
 const Home = () => {
-  const [jobs, setJobs] = useState([]);
-
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const response = await axios.get("/api/jobs");
-        setJobs(response.data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
-    fetchJobs();
-  }, []);
 
   return (
     <div className="home">
@@ -50,18 +35,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* <section className="job-listings">
-        <h2>Available Jobs</h2>
-        <div className="job-cards">
-          {jobs.map((job) => (
-            <div key={job.id} className="job-card">
-              <h3>{job.title}</h3>
-              <p>{job.description}</p>
-              <p><strong>Location:</strong> {job.location}</p>
-            </div>
-          ))}
-        </div>
-      </section> */}
 
       <section className="testimonials">
         <h2>What Our Users Say</h2>
@@ -71,7 +44,7 @@ const Home = () => {
               "This tool has revolutionized the way our team works remotely."
             </p>
             <p>
-              <strong>- John Doe, CEO</strong>
+              <strong>- Isaac Njuguna, CEO</strong>
             </p>
           </div>
           <div className="testimonial-card">
@@ -79,7 +52,7 @@ const Home = () => {
               "A must-have for any remote team looking to boost productivity."
             </p>
             <p>
-              <strong>- Jane Smith, Project Manager</strong>
+              <strong>- Alamin Juma, Project Manager</strong>
             </p>
           </div>
         </div>
