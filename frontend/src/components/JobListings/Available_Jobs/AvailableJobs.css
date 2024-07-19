@@ -11,9 +11,15 @@
   color: #333;
 }
 
-.search-section {
+.search-and-post {
+  display: flex;
+  align-items: center;
   margin-bottom: 20px;
-  
+}
+
+.search-section {
+  flex: 1;
+  margin-right: 10px;
 }
 
 .search-input {
@@ -28,6 +34,20 @@
 .search-input:focus {
   border-color: #007bff;
   outline: none;
+}
+
+.post-job-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.post-job-button:hover {
+  background-color: #0056b3;
 }
 
 .job-cards {
@@ -73,7 +93,6 @@
 .view-details-link:hover {
   background-color: #199400;
   color: white;
-
 }
 
 .view-all-button {

@@ -1,30 +1,38 @@
-
-
-
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+// Ensure the uploads directory exists
+const uploadDir = path.join(__dirname, '..', '..', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: (req, file, cb) => {
     cb(null, path.join(__dirname, '..', 'uploads'));
   },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
 
-
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-  if (!allowedTypes.includes(file.mimetype)) {
-    const error = new Error('Wrong file type');
-    error.code = 'FILE_TYPE';
-    return cb(error, false);
+  const fileTypes = /pdf|doc|docx/;
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = fileTypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    cb(null, true);
+  } else {
+    cb(new Error('Invalid file type. Only PDF, DOC, and DOCX files are allowed.'));
   }
-  cb(null, true);
 };
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({
+  storage,
+  limits: { fileSize: 1024 * 1024 * 5 }, // 5MB file size limit
+  fileFilter,
+});
 
 module.exports = upload;

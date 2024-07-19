@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -30,6 +29,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/messages', communicationRoutes);
 app.use('/api/notifications', notificationRoutes); 
+app.use('/uploads', express.static('uploads'));
 
 // Connect to Database
 connectDB();

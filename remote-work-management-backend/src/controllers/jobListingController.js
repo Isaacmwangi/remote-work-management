@@ -26,7 +26,7 @@ const getJobListings = async (req, res) => {
     const jobListings = await prisma.jobListing.findMany({
       include: {
         employer: {
-          select: { username: true }
+          select: { username: true, company: true }
         }
       }
     });
@@ -44,7 +44,7 @@ const getJobListingById = async (req, res) => {
       where: { id: parseInt(id) },
       include: {
         employer: {
-          select: { id: true, username: true, email: true }  
+          select: { id: true, username: true, email: true, company: true }
         }
       }
     });
@@ -61,20 +61,29 @@ const getJobListingById = async (req, res) => {
   }
 };
 
-
-
-
 const updateJobListing = async (req, res) => {
   const { id } = req.params;
   const { title, description, requirements, location } = req.body;
 
   try {
-    const jobListing = await prisma.jobListing.update({
+    const jobListing = await prisma.jobListing.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!jobListing) {
+      return res.status(404).json({ message: 'Job listing not found' });
+    }
+
+    if (req.user.id !== jobListing.employer_id && req.user.role !== 'ADMIN') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const updatedJobListing = await prisma.jobListing.update({
       where: { id: parseInt(id) },
       data: { title, description, requirements, location }
     });
 
-    res.json(jobListing);
+    res.json(updatedJobListing);
   } catch (error) {
     res.status(500).json({ error: 'Error updating job listing' });
   }
@@ -84,6 +93,18 @@ const deleteJobListing = async (req, res) => {
   const { id } = req.params;
 
   try {
+    const jobListing = await prisma.jobListing.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!jobListing) {
+      return res.status(404).json({ message: 'Job listing not found' });
+    }
+
+    if (req.user.id !== jobListing.employer_id && req.user.role !== 'ADMIN') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
     await prisma.jobListing.delete({
       where: { id: parseInt(id) }
     });

@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 const { prisma } = require('../config/db');
 
@@ -18,13 +17,14 @@ const authMiddleware = async (req, res, next) => {
     });
 
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    req.user = user; 
+    req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({ message: 'Token is not valid' });
+    console.error('Authentication error:', error);
+    res.status(401).json({ message: 'Unauthorized: Invalid token or token expired' });
   }
 };
 

@@ -1,12 +1,19 @@
+// Final_Project/remote-work-management-backend/src/controllers/authController.js
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { prisma } = require('../config/db');
 const path = require('path');
+const { prisma } = require('../config/db');
 const { registerSchema, loginSchema } = require('../validation/validationSchemas');
 
 const register = async (req, res) => {
   try {
-    const { username, email, password, role, country, location, address, company, isPrivate } = req.body;
+    const { error } = registerSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+
+    const { firstName, secondName, username, email, password, role, country, location, address, company } = req.body;
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -25,60 +32,61 @@ const register = async (req, res) => {
 
     const user = await prisma.user.create({
       data: {
+        firstName,
+        secondName,
         username,
         email,
         password: hashedPassword,
-        role,
+        role, // Storing role as provided in the request
         country,
         location,
         address,
-        resume: resumePath,
-        company: role === "EMPLOYER" ? company : null, 
-        isPrivate: role === "EMPLOYER" ? isPrivate : null 
+        company,
+        resume: resumePath, // Optional resume upload
       },
     });
-    
+
     const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 
     res.status(201).json({ token });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Server error" });
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Server error' });
   }
 };
 
-
 const login = async (req, res) => {
   try {
+    const { email, password } = req.body;
+
     const { error } = loginSchema.validate(req.body);
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
     }
-
-    const { email, password } = req.body;
 
     const user = await prisma.user.findUnique({
       where: { email },
     });
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(400).json({ error: "Invalid email or password" });
     }
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
 
     res.status(200).json({ token });
   } catch (error) {
-    console.error('Error logging in:', error);
-    res.status(500).json({ error: 'Error logging in' });
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
   }
 };
 

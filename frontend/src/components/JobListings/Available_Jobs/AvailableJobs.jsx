@@ -7,6 +7,7 @@ const AvailableJobs = ({ onJobCountChange }) => {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -20,7 +21,21 @@ const AvailableJobs = ({ onJobCountChange }) => {
       }
     };
 
+    const fetchUserRole = async () => {
+      try {
+        const response = await axios.get("/api/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUserRole(response.data.role); // Set user role
+      } catch (error) {
+        console.error("Error fetching user role:", error);
+      }
+    };
+
     fetchJobs();
+    fetchUserRole();
   }, [onJobCountChange]);
 
   const handleSearch = (e) => {
@@ -49,28 +64,35 @@ const AvailableJobs = ({ onJobCountChange }) => {
   return (
     <div className="available-jobs">
       <h2>Available Jobs</h2>
-      <div className="search-section">
-        <input
-          type="text"
-          placeholder="Search jobs..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="search-input"
-        />
+      <div className="search-and-post">
+        <div className="search-section">
+          <input
+            type="text"
+            placeholder="Search jobs..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="search-input"
+          />
+        </div>
+        {/* Show "Post a Job" button if the user is an employer or admin */}
+        {(userRole === 'EMPLOYER' || userRole === 'ADMIN') && (
+          <Link to="/joblistings/add" className="post-job-button">
+            Post a Job
+          </Link>
+        )}
       </div>
       <div className="job-cards">
         {filteredJobs.map((job) => (
           <div key={job.id} className="job-card">
             {/* Display job details */}
             <h3>{job.title}</h3>
-            <p>{job.company || job.organization || "No organization"}</p>
+            <h3>{job.company}</h3>
             <p>{job.description}</p>
             <p>
               <strong>Location:</strong> {job.location}
             </p>
             <p>
-              <strong>Posted by:</strong>{" "}
-              {job.employer?.username || "Unknown"}
+              <strong>Posted by:</strong> {job.employer?.username || "Unknown"}
             </p>
             {/* Link to job details page */}
             <Link
@@ -82,6 +104,7 @@ const AvailableJobs = ({ onJobCountChange }) => {
           </div>
         ))}
       </div>
+
       {jobs.length > 6 && (
         <button onClick={handleViewAll} className="view-all-button">
           View All Jobs
@@ -92,4 +115,3 @@ const AvailableJobs = ({ onJobCountChange }) => {
 };
 
 export default AvailableJobs;
-

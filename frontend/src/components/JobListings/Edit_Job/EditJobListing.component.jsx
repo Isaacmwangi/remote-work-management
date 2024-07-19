@@ -1,72 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import './EditJobListing.css';
 
 const EditJobListing = () => {
   const { id } = useParams();
   const [job, setJob] = useState({});
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [location, setLocation] = useState('');
-  const [company, setCompany] = useState('');
-  const [organization, setOrganization] = useState('');
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    requirements: '',
+    location: '',
+  });
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchJobListing();
-  }, []);
+    const fetchJobListing = async () => {
+      try {
+        const response = await axios.get(`/api/joblistings/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        setJob(response.data);
+        setFormData({
+          title: response.data.title,
+          description: response.data.description,
+          requirements: response.data.requirements,
+          location: response.data.location,
+        });
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching job listing', error);
+        setLoading(false);
+      }
+    };
 
-  const fetchJobListing = async () => {
+    fetchJobListing();
+  }, [id]);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSave = async () => {
     try {
-      const response = await axios.get(`/api/joblistings/${id}`);
-      setJob(response.data);
-      setTitle(response.data.title);
-      setDescription(response.data.description);
-      setLocation(response.data.location);
-      setCompany(response.data.company || '');
-      setOrganization(response.data.organization || '');
+      await axios.put(`/api/joblistings/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      navigate('/joblistings');
     } catch (error) {
-      console.error('Error fetching job listing:', error);
+      console.error('Error updating job listing', error);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`/api/joblistings/${id}`, {
-        title,
-        description,
-        location,
-        company,
-        organization,
-      });
-      alert('Job listing updated successfully!');
-    } catch (error) {
-      console.error('Error updating job listing:', error);
-      alert('Failed to update job listing');
-    }
+  const handleCancel = () => {
+    navigate('/joblistings');
   };
 
   return (
-    <div>
-      <h2>Edit Job Listing</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Title:</label>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-        <br />
-        <label>Description:</label>
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-        <br />
-        <label>Location:</label>
-        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
-        <br />
-        <label>Company:</label>
-        <input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
-        <br />
-        <label>Organization:</label>
-        <input type="text" value={organization} onChange={(e) => setOrganization(e.target.value)} />
-        <br />
-        <button type="submit">Update Job Listing</button>
-      </form>
+    <div className="edit-job-listing-container">
+      <h1>Edit Job Listing</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="edit-job-listing-form">
+          <label htmlFor="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          ></textarea>
+          <label htmlFor="requirements">Requirements:</label>
+          <textarea
+            id="requirements"
+            name="requirements"
+            value={formData.requirements}
+            onChange={handleChange}
+          ></textarea>
+          <label htmlFor="location">Location:</label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+          />
+          <div className="button-group">
+            <button onClick={handleSave} className="button save-button">Save</button>
+            <button onClick={handleCancel} className="button cancel-button">Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

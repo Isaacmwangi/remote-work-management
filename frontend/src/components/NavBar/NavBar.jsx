@@ -3,10 +3,35 @@ import { Link, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext'; 
+import axios from 'axios';
+import { FaUserCircle } from 'react-icons/fa'; // Import an icon for user avatar
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useAuth();
+  const [username, setUsername] = React.useState('');
+  const [avatar, setAvatar] = React.useState(null); // State for storing avatar URL
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      if (!isAuthenticated) return;
+
+      try {
+        const response = await axios.get('/api/profile', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUsername(response.data.username);
+        setAvatar(response.data.avatar || null); 
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+        toast.error('Failed to fetch profile');
+      }
+    };
+
+    fetchProfile();
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     logout();
@@ -14,21 +39,43 @@ const NavBar = () => {
     navigate('/login');
   };
 
+  const UserAvatar = () => (
+    avatar ? (
+      <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
+    ) : (
+      <FaUserCircle className="avatar-icon" />
+    )
+  );
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/">Home</Link>
       </div>
+      <div className="navbar-center">
+        {isAuthenticated && username && (
+          <div className="username-container">
+            <span className="username">
+              <Link to="/profile">{username}</Link>
+            </span>
+          </div>
+        )}
+      </div>
       <div className="navbar-right">
         {isAuthenticated ? (
           <>
-            <Link to="/profile">Profile</Link>
-            <button onClick={handleLogout}>Logout</button>
+            <Link to="/profile" className="profile-link">
+              <UserAvatar />
+              Profile
+            </Link>
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
           </>
         ) : (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/register">Register</Link>
+            <Link to="/login" className="auth-link">Login</Link>
+            <Link to="/register" className="auth-link">Register</Link>
           </>
         )}
       </div>

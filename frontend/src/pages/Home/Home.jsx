@@ -50,7 +50,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      <section className="job-listings">
+      {/* <section className="job-listings">
         <h2>Available Jobs</h2>
         <div className="job-cards">
           {jobs.map((job) => (
@@ -61,7 +61,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section className="testimonials">
         <h2>What Our Users Say</h2>

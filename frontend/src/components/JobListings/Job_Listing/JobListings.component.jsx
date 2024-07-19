@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './JobListings.css';
+import { toast } from 'react-toastify';
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredJobs, setFilteredJobs] = useState([]);
+  const [userRole, setUserRole] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -19,7 +22,21 @@ const JobListings = () => {
       }
     };
 
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get('/api/profile', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setUserRole(response.data.role);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
     fetchJobs();
+    fetchUserProfile();
   }, []);
 
   const handleSearch = (e) => {
@@ -33,9 +50,19 @@ const JobListings = () => {
     } else {
       const filtered = jobs.filter(job =>
         job.title.toLowerCase().includes(term.toLowerCase()) ||
-        job.employer.username.toLowerCase().includes(term.toLowerCase())
+        job.description.toLowerCase().includes(term.toLowerCase()) ||
+        job.employer?.username.toLowerCase().includes(term.toLowerCase())
       );
       setFilteredJobs(filtered);
+    }
+  };
+
+  const handlePostJob = () => {
+    if (userRole !== 'EMPLOYER' && userRole !== 'ADMIN') {
+      toast.warn('You must be an Employer or Admin to post a job. Please update your role in your profile.');
+      navigate('/profile'); // Redirect to profile page for role change
+    } else {
+      navigate('/joblistings/add'); // Proceed to post job
     }
   };
 
@@ -50,10 +77,13 @@ const JobListings = () => {
             onChange={handleSearch}
             className="job-search-input"
           />
-          </div>
-          <Link to="/joblistings/add">
-            <button className="post-job-button">Post a Job</button>
-          </Link>
+        </div>
+        {/* Show "Post a Job" button if the user is an employer or admin */}
+        {(userRole === 'EMPLOYER' || userRole === 'ADMIN') && (
+          <button className="post-job-button" onClick={handlePostJob}>
+            Post a Job
+          </button>
+        )}
       </div>
       <div className="job-list">
         <ol>
@@ -62,22 +92,20 @@ const JobListings = () => {
               <Link to={`/joblistings/${job.id}`} className="job-link">
                 <div className="job-card">
                   <h3>{job.title}</h3>
-                  <h3>Company:{job.company}</h3>
-            <p>{job.description}</p>
-            <p>
-              <strong>Location:</strong> {job.location}
-            </p>
-            <p>
-              <strong>By:</strong>{" "}
-              {job.employer?.username || "Unknown"}
-            </p>
-            {/* Link to job details page */}
-            <Link
-              to={`/joblistings/${job.id}`}
-              className="view-details-link"
-            >
-              View Details
-            </Link>
+                  <h3>{job.employer?.company}</h3>
+                  <p>{job.description}</p>
+                  <p>
+                    <strong>Location:</strong> {job.location}
+                  </p>
+                  <p>
+                    <strong>By:</strong> {job.employer?.username || "Unknown"}
+                  </p>
+                  <Link
+                    to={`/joblistings/${job.id}`}
+                    className="view-details-link"
+                  >
+                    View Details
+                  </Link>
                 </div>
               </Link>
             </li>

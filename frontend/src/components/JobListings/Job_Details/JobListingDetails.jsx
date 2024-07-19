@@ -1,66 +1,92 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './JobListingDetails.module.css';
+import { toast } from 'react-toastify';
+import './JobListingDetails.css';
 
-const JobDetails = () => {
+const JobListingDetails = () => {
   const { id } = useParams();
-  const [job, setJob] = useState({});
-  const [user, setUser] = useState({});
   const navigate = useNavigate();
+  const [jobListing, setJobListing] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    const fetchJobListing = async () => {
-      try {
-        const response = await axios.get(`/api/joblistings/${id}`);
-        console.log('Job Data:', response.data); 
-        setJob(response.data);
-        setUser(response.data.employer); 
-      } catch (error) {
-        console.error('Error fetching job listing:', error);
-      }
-    };
-  
     fetchJobListing();
+    fetchCurrentUser();
   }, [id]);
-  
+
+  const fetchJobListing = async () => {
+    try {
+      const response = await axios.get(`/api/joblistings/${id}`);
+      setJobListing(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching job listing', error);
+      toast.error('Error fetching job listing');
+      setLoading(false);
+    }
+  };
+
+  const fetchCurrentUser = async () => {
+    try {
+      const response = await axios.get('/api/profile', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      setCurrentUser(response.data);
+    } catch (error) {
+      console.error('Error fetching user profile', error);
+      toast.error('Error fetching user profile');
+    }
+  };
 
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this job listing?')) {
       try {
-        await axios.delete(`/api/joblistings/${id}`);
-        alert('Job listing deleted successfully');
+        await axios.delete(`/api/joblistings/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        toast.success('Job listing deleted successfully');
         navigate('/joblistings');
       } catch (error) {
-        console.error('Error deleting job listing:', error);
-        alert('Failed to delete job listing');
+        console.error('Error deleting job listing', error);
+        toast.error('Error deleting job listing');
       }
     }
   };
 
-  const handleApply = async () => {
-    // application logic 
-    alert('Application functionality to be implemented');
+  const handleEdit = () => {
+    navigate(`/edit-job/${id}`);
   };
 
-  return (
-    <div className={styles.container}>
-      <h2>Job Details</h2>
-      <h3>Title: {job.title}</h3>
-      <h3>Company:{job.company}</h3>
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
 
-<p>Description: {job.description}</p>
-      <p>Location: {job.location}</p>
-      <p><strong>Posted by:</strong> {job.employer?.username || 'Unknown'}</p>
-      <p><strong>Contact Email:</strong> {user.email || 'Email not available'}</p>
-      {/* Display apply button */}
-      <button onClick={handleApply}>Apply for Job</button>
-      {/* Display delete button if the user is the owner */}
-      {job.isOwner && (
-        <button onClick={handleDelete}>Delete Job Listing</button>
+  if (!jobListing) {
+    return <div className="not-found">Job listing not found</div>;
+  }
+
+  return (
+    <div className="job-listing-details">
+      <h1 className="job-title">{jobListing.title}</h1>
+      <p className="job-description">{jobListing.description}</p>
+      <p className="job-requirements"><strong>Requirements:</strong> {jobListing.requirements}</p>
+      <p className="job-location"><strong>Location:</strong> {jobListing.location}</p>
+      <p className="job-posted-by"><strong>Posted by:</strong> {jobListing.employer.username} ({jobListing.employer.company})</p>
+
+      {currentUser && (currentUser.id === jobListing.employer.id || currentUser.role === 'ADMIN') && (
+        <div className="actions">
+          <button onClick={handleEdit} className="btn btn-primary">Edit</button>
+          <button onClick={handleDelete} className="btn btn-danger">Delete</button>
+        </div>
       )}
     </div>
   );
 };
 
-export default JobDetails;
+export default JobListingDetails;

@@ -21,15 +21,12 @@ const LoginPage = () => {
       navigate('/dashboard');
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        console.error(error.response.data); // Log the detailed error response from backend
+        console.error(error.response.data);
         toast.error(error.response.data.error || 'Failed to log in');
       } else if (error.request) {
-        // The request was made but no response was received
         console.error(error.request);
         toast.error('No response received from server');
       } else {
-        // Something happened in setting up the request that triggered an error
         console.error('Error during request setup:', error.message);
         toast.error('Error during login');
       }

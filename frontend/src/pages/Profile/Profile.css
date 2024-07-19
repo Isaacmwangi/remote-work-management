@@ -1,109 +1,153 @@
-/* Profile.css */
-
+/* General Container Styles */
 .profile-container {
-	max-width: 800px;
-	margin: 20px auto;
 	padding: 20px;
-	border: 1px solid #ddd;
-	border-radius: 10px;
-	background-color: #fff;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 900px;
+	margin: 0 auto;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	animation: fadeIn 0.5s ease-out;
   }
   
-  .profile-info {
+  /* Header */
+  .profile-container h1 {
+	font-size: 2rem;
 	margin-bottom: 20px;
+	color: #333;
   }
   
-  .profile-field {
-	margin-bottom: 15px;
-	display: flex;
-	align-items: center;
-  }
-  
-  .profile-field label {
-	font-weight: bold;
-	margin-right: 10px;
-	min-width: 120px;
-  }
-  
-  .profile-field input,
-  .profile-field select {
-	flex: 1;
-	padding: 10px; /* Adjusted padding for better spacing */
-	border: 1px solid #ccc;
-	border-radius: 5px;
+  /* Form and Input Styles */
+  input[type="text"], 
+  input[type="email"], 
+  select {
+	width: 100%;
+	padding: 10px;
+	margin: 8px 0;
+	border: 1px solid #ddd;
+	border-radius: 4px;
 	box-sizing: border-box;
   }
   
-  .profile-field select {
-	width: 100%;
+  /* File Input */
+  input[type="file"] {
+	margin: 8px 0;
   }
   
-  .profile-field button {
-	padding: 10px 20px; /* Increased padding for better clickability */
-	border: none;
-	border-radius: 5px;
-	background-color: #007bff;
+  /* Buttons */
+  button {
+	background-color: #007bff; /* Default button color */
 	color: white;
+	border: none;
+	padding: 10px 20px;
+	margin: 10px 5px;
+	border-radius: 4px;
 	cursor: pointer;
-	margin-left: 10px;
+	transition: background-color 0.3s ease;
   }
   
-  .profile-field button:hover {
+  /* Specific Button Colors */
+  button.edit-button {
+	background-color: #17a2b8; /* Edit button color */
+  }
+  
+  button.delete-button {
+	background-color: #dc3545; /* Delete button color */
+  }
+  
+  button.upload-button {
+	background-color: #28a745; /* Upload button color */
+  }
+  
+  button.cancel-button {
+	background-color: #ffc107; /* Cancel button color */
+  }
+  
+  /* Button Hover and Disabled States */
+  button:hover {
 	background-color: #0056b3;
   }
   
-  .profile-actions {
-	text-align: center;
+  button.edit-button:hover {
+	background-color: #138496; /* Hover color for edit */
+  }
+  
+  button.delete-button:hover {
+	background-color: #c82333; /* Hover color for delete */
+  }
+  
+  button.upload-button:hover {
+	background-color: #218838; /* Hover color for upload */
+  }
+  
+  button.cancel-button:hover {
+	background-color: #e0a800; /* Hover color for cancel */
+  }
+  
+  button:disabled {
+	background-color: #ddd;
+	cursor: not-allowed;
+  }
+  
+  /* Profile Information */
+  .profile-info p {
+	font-size: 1rem;
+	color: #555;
+	margin: 5px 0;
+  }
+  
+  .profile-info p b {
+	font-weight: bold;
+  }
+  
+  /* Resume Section */
+  .resume-container {
 	margin-top: 20px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .related-entities {
-	margin-top: 30px;
-  }
-  
-  .related-entities h2 {
-	margin-bottom: 15px;
+  .resume-container h2 {
 	font-size: 1.5rem;
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 10px;
+	margin-bottom: 15px;
   }
   
-  .related-entities div {
-	margin-bottom: 20px;
+  .resume-container button {
+	margin: 5px;
   }
   
-  .related-entities h3 {
-	margin-bottom: 10px;
-	font-size: 1.2rem;
+  /* Uploading State */
+  .uploading {
+	color: #007bff;
   }
   
-  .related-entities ol,
-  .related-entities ul {
+  /* Job Post, Application, Team, Task, Message, and Notification Lists */
+  h3 {
+	font-size: 1.25rem;
+	margin-top: 20px;
+	color: #333;
+  }
+  
+  ol, ul {
 	padding-left: 20px;
   }
   
-  .related-entities li {
-	margin-bottom: 5px;
+  li {
+	margin: 5px 0;
   }
   
-  /* Responsive adjustments */
-  @media (max-width: 600px) {
-	.profile-container {
-	  padding: 15px;
+  /* Animation */
+  @keyframes fadeIn {
+	from {
+	  opacity: 0;
 	}
+	to {
+	  opacity: 1;
+	}
+  }
   
-	.profile-field {
-	  flex-direction: column;
-	}
-  
-	.profile-field label {
-	  margin-bottom: 5px;
-	}
-  
-	.profile-field input,
-	.profile-field select {
-	  width: 100%;
-	}
+  .profile-container, .resume-container {
+	animation: fadeIn 0.5s ease-out;
   }
   
