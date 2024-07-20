@@ -1,8 +1,6 @@
 # Remote Work Management
 Welcome to the Remote Work Management platform, a comprehensive solution for efficient remote team management and collaboration.
 
-![Remote Work Management Screenshot](./frontend/src/assets/Screenshot_Home.jpg)
-
 ## Current Features
 
 - **Role-Based Access and Profiles**:
@@ -78,12 +76,12 @@ Upon successful login, you'll be redirected to your dashboard where you can mana
 
 ![Dashboard](./remote-work-management-frontend/src/assets/Screenshot_Dashboard.jpg)
 
-### Job Listings
-From the dashboard, you can view available job listings. You can filter and search for jobs to find opportunities that match your interests.
+### Available
+From the dashboard, you can view available job listings. You can filter and search for jobs to find opportunities that match your interests. This show only the top 6 jobs. Below the available Jobs there is a button to view all jobs which will direct you to another page with all jobs.
 
 ![Available Jobs](./frontend/src/assets/Screenshot_AvailableJobs.jpg)
 
-### Add Job Listing
+### Posting a Job
 If you're an employer, you can add new job listings to attract potential candidates.
 
 ![Add Job Listing](./frontend/src/assets/Screenshot_AddJobListing.jpg)
