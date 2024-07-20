@@ -66,3 +66,8 @@ If you are the employer of a job listing, you can edit or delete the job posting
 Manage your user profile by updating your personal information and preferences.
 
 ![Profile](./src/assets/Screenshot_Profile.jpg)
+
+## Contributors
+
+- [Isaac Mwangi](https://github.com/Isaacmwangi)
+- [Alamin Juma](https://github.com/alamin-juma)
