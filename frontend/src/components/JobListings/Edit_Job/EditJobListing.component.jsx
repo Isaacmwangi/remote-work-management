@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import "./EditJobListing.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const EditJobListing = () => {
   const { id } = useParams();
@@ -33,6 +35,7 @@ const EditJobListing = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching job listing", error);
+        toast.error("Error fetching job listing");
         setLoading(false);
       }
     };
@@ -54,9 +57,11 @@ const EditJobListing = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      toast.success("Job listing updated successfully");
       navigate("/joblistings");
     } catch (error) {
       console.error("Error updating job listing", error);
+      toast.error("Error updating job listing");
     }
   };
 
@@ -66,12 +71,14 @@ const EditJobListing = () => {
 
   return (
     <div className="edit-job-listing-container">
-      <h1>Edit My Job</h1>
+      <h1>Edit</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
         <div className="edit-job-listing-form">
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="title">
+            <i className="fas fa-heading"></i> Title:
+          </label>
           <input
             type="text"
             id="title"
@@ -79,21 +86,27 @@ const EditJobListing = () => {
             value={formData.title}
             onChange={handleChange}
           />
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="description">
+            <i className="fas fa-align-left"></i> Description:
+          </label>
           <textarea
             id="description"
             name="description"
             value={formData.description}
             onChange={handleChange}
           ></textarea>
-          <label htmlFor="requirements">Requirements:</label>
+          <label htmlFor="requirements">
+            <i className="fas fa-list"></i> Requirements:
+          </label>
           <textarea
             id="requirements"
             name="requirements"
             value={formData.requirements}
             onChange={handleChange}
           ></textarea>
-          <label htmlFor="location">Location:</label>
+          <label htmlFor="location">
+            <i className="fas fa-map-marker-alt"></i> Location:
+          </label>
           <input
             type="text"
             id="location"
@@ -103,10 +116,10 @@ const EditJobListing = () => {
           />
           <div className="button-group">
             <button onClick={handleSave} className="button save-button">
-              Save
+              <i className="fas fa-save"></i> Save
             </button>
             <button onClick={handleCancel} className="button cancel-button">
-              Cancel
+              <i className="fas fa-times"></i> Cancel
             </button>
           </div>
         </div>
