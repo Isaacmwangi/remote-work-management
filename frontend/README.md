@@ -41,9 +41,10 @@ Fill all the details needed
 ![Register Page](./src/assets/Screenshot_registerPage.jpg)
 
 
-### Login
 If you're already a user, click on the "Login" link to access your account.
 
+### Login
+Fill in your credentials to login to your account. ensure your credentials are correct. if you dont have an account yet, you can click the register button to register.
 ![Login Page](./src/assets/Screenshot_loginPage.jpg)
 
 ### Dashboard
