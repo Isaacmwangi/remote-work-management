@@ -29,7 +29,6 @@ Welcome to the Remote Work Management platform, a comprehensive solution for eff
 - **Server**: Node.js with Express.js
 - **Authentication**: JWT (JSON Web Tokens)
 - **Database**: MySQL
-- **APIs**: Integration with Zoom, Google Docs, and Trello APIs
 
 ### Frontend Development
 - **Framework**: React.js
