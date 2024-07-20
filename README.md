@@ -82,7 +82,6 @@ This will then direct to Dashboard
 
 ### Dashboard
 Upon successful login, you'll be redirected to your dashboard where you can manage all your remote work needs.
-
 ![Dashboard](./frontend/src/assets/Screenshot_Dashboard.jpg)
 
 ### Available
