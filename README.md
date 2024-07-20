@@ -86,13 +86,18 @@ From the dashboard, you can view available job listings. You can filter and sear
 
 ![Available Jobs](./frontend/src/assets/Screenshot_AvailableJobs.jpg)
 
+### All Jobs
+on the all jobs page, you will access all jobs posted and able to search any job you need. if you are an employer (left side) you will see a button to post a job.
+
+![ALl Jobs](./frontend/src/assets/Screenshot_JobListings.jpg)
+
 ### Posting a Job
 If you're an employer, you can add new job listings to attract potential candidates.
 
 ![Add Job Listing](./frontend/src/assets/Screenshot_AddJobListing.jpg)
 
 ### Job Listing Details
-Click on a job listing to view its details. You can see the full description, requirements, and location.
+Click on a job listing to view its details. You can see the full description, requirements, and location. if the user is the owner of the posted Job, they will have options to edit or delete the job (left side), else they only have to view the job Information
 
 ![Job Listing Details](./frontend/src/assets/Screenshot_JobListingDetails.jpg)
 

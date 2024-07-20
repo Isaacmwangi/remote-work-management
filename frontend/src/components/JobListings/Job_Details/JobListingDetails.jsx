@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "./JobListingDetails.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const JobListingDetails = () => {
   const { id } = useParams();
@@ -74,24 +75,27 @@ const JobListingDetails = () => {
   return (
     <div className="job-listing-details">
       <h1 className="job-title">{jobListing.title}</h1>
+      <h3 className="job-company">{jobListing.employer.company}</h3>
       <p className="job-description">{jobListing.description}</p>
       <p className="job-requirements">
-        <strong>Requirements:</strong> {jobListing.requirements}
+        <i className="fas fa-tasks"></i> <strong>Requirements:</strong> {jobListing.requirements}
       </p>
       <p className="job-location">
-        <strong>Location:</strong> {jobListing.location}
+        <i className="fas fa-map-marker-alt"></i> <strong>Location:</strong> {jobListing.location}
       </p>
       <p className="job-posted-by">
-        <strong>Posted by:</strong> {jobListing.employer.username}
+        <i className="fas fa-user"></i> <strong>Posted by:</strong> {jobListing.employer.username}
       </p>
-      <h3>{jobListing.employer.company}</h3>
-
+      <p className="job-contact-email">
+        <i className="fas fa-envelope"></i> <strong>Contact Email:</strong> 
+        <a href={`mailto:${jobListing.employer.email}`}> {jobListing.employer.email || "Email not available"}</a>
+      </p>
       {currentUser &&
         (currentUser.id === jobListing.employer.id ||
           currentUser.role === "ADMIN") && (
           <div className="actions">
             <button onClick={handleEdit} className="btn btn-primary">
-              Edit
+       Edit
             </button>
             <button onClick={handleDelete} className="btn btn-danger">
               Delete

@@ -66,7 +66,7 @@ const EditJobListing = () => {
 
   return (
     <div className="edit-job-listing-container">
-      <h1>Edit Job Listing</h1>
+      <h1>Edit My Job</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (

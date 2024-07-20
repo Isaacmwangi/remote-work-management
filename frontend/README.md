@@ -35,6 +35,8 @@ If you're new to the platform, click on the "Get Started" button to register.
 ![Getting Started Page](./src/assets/Screenshot_GetStarted1.jpg)
 
 This will direct you to Register page were you will be required to fill all the form given to register
+
+
 ![Register Page](./src/assets/Screenshot_registerPage.jpg)
 
 
@@ -47,23 +49,23 @@ Upon successful login, you'll be redirected to your dashboard where you can mana
 
 ![Dashboard](./src/assets/Screenshot_Dashboard.jpg)
 
-### Job Listings
-From the dashboard, you can view available job listings. You can filter and search for jobs to find opportunities that match your interests.
+### Available Jobs
+From the dashboard, you can view available job listings. You can filter and search for jobs to find opportunities that match your interests. If you are an employer you will see a button to Post a job just next to the search
 
 ![Available Jobs](./src/assets/Screenshot_AvailableJobs.jpg)
 
-### Add Job Listing
+### Post a Job 
 If you're an employer, you can add new job listings to attract potential candidates.
 
 ![Add Job Listing](./src/assets/Screenshot_AddJobListing.jpg)
 
-### Job Listing Details
-Click on a job listing to view its details. You can see the full description, requirements, and location.
+### Posted Job Details
+Click on a job you need to view its details. You can see the full description, requirements, location and a contact email.
 
 ![Job Listing Details](./src/assets/Screenshot_JobListingDetails.jpg)
 
-### Edit Job Listing
-If you are the employer of a job listing, you can edit or delete the job posting you posted.
+### Editing your Job
+If you are the owner of the posted job, you can edit or delete the job posting you posted.
 
 ![Edit Job Listing](./src/assets/Screenshot_EditJobListing.jpg)
 

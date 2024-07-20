@@ -94,6 +94,7 @@ const AvailableJobs = ({ onJobCountChange }) => {
             <p>
               <strong>Posted by:</strong> {job.employer?.username || "Unknown"}
             </p>
+            
             {/* Link to job details page */}
             <Link to={`/joblistings/${job.id}`} className="view-details-link">
               View Details
