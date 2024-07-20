@@ -106,6 +106,6 @@ Manage your user profile by updating your personal information and preferences.
 
 ## Contributors
 
-- Isaac Njuguna (@isaacmwangi)
-- Alamin Juma (@alamin-juma)
+- [Isaac Njuguna](https://github.com/Isaacmwangi)
+- [Alamin Juma](https://github.com/alamin-juma)
 
