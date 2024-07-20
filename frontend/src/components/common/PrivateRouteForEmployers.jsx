@@ -35,7 +35,7 @@ const PrivateRouteForEmployers = ({ element: Component, ...rest }) => {
   }, [isAuthenticated]);
 
   if (loading) {
-    return <div>Loading...</div>; // Or a loading spinner
+    return <div>Loading...</div>;
   }
 
   return isAuthenticated && isEmployer ? (

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./ResumePage.css"; 
+import "./ResumePage.css";
 
 const ResumePage = () => {
   const location = useLocation();
@@ -15,7 +15,7 @@ const ResumePage = () => {
     if (location.state?.resume) {
       fetchResume();
     }
-  }, [location.state?.resume]); 
+  }, [location.state?.resume]);
 
   const fetchResume = async () => {
     try {
@@ -24,7 +24,7 @@ const ResumePage = () => {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        responseType: 'blob' // The response is treated as a file blob
+        responseType: "blob", // The response is treated as a file blob
       });
 
       const fileURL = URL.createObjectURL(response.data);
@@ -40,7 +40,7 @@ const ResumePage = () => {
 
   const handleDownload = () => {
     if (resume) {
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = resume;
       link.download = "resume.pdf"; // a default filename
       link.click();

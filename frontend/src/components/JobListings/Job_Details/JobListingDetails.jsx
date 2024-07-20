@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import './JobListingDetails.css';
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "./JobListingDetails.css";
 
 const JobListingDetails = () => {
   const { id } = useParams();
@@ -22,39 +22,39 @@ const JobListingDetails = () => {
       setJobListing(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching job listing', error);
-      toast.error('Error fetching job listing');
+      console.error("Error fetching job listing", error);
+      toast.error("Error fetching job listing");
       setLoading(false);
     }
   };
 
   const fetchCurrentUser = async () => {
     try {
-      const response = await axios.get('/api/profile', {
+      const response = await axios.get("/api/profile", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       setCurrentUser(response.data);
     } catch (error) {
-      console.error('Error fetching user profile', error);
-      toast.error('Error fetching user profile');
+      console.error("Error fetching user profile", error);
+      toast.error("Error fetching user profile");
     }
   };
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this job listing?')) {
+    if (window.confirm("Are you sure you want to delete this job listing?")) {
       try {
         await axios.delete(`/api/joblistings/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        toast.success('Job listing deleted successfully');
-        navigate('/joblistings');
+        toast.success("Job listing deleted successfully");
+        navigate("/joblistings");
       } catch (error) {
-        console.error('Error deleting job listing', error);
-        toast.error('Error deleting job listing');
+        console.error("Error deleting job listing", error);
+        toast.error("Error deleting job listing");
       }
     }
   };
@@ -75,17 +75,29 @@ const JobListingDetails = () => {
     <div className="job-listing-details">
       <h1 className="job-title">{jobListing.title}</h1>
       <p className="job-description">{jobListing.description}</p>
-      <p className="job-requirements"><strong>Requirements:</strong> {jobListing.requirements}</p>
-      <p className="job-location"><strong>Location:</strong> {jobListing.location}</p>
-      <p className="job-posted-by"><strong>Posted by:</strong> {jobListing.employer.username}</p>
+      <p className="job-requirements">
+        <strong>Requirements:</strong> {jobListing.requirements}
+      </p>
+      <p className="job-location">
+        <strong>Location:</strong> {jobListing.location}
+      </p>
+      <p className="job-posted-by">
+        <strong>Posted by:</strong> {jobListing.employer.username}
+      </p>
       <h3>{jobListing.employer.company}</h3>
 
-      {currentUser && (currentUser.id === jobListing.employer.id || currentUser.role === 'ADMIN') && (
-        <div className="actions">
-          <button onClick={handleEdit} className="btn btn-primary">Edit</button>
-          <button onClick={handleDelete} className="btn btn-danger">Delete</button>
-        </div>
-      )}
+      {currentUser &&
+        (currentUser.id === jobListing.employer.id ||
+          currentUser.role === "ADMIN") && (
+          <div className="actions">
+            <button onClick={handleEdit} className="btn btn-primary">
+              Edit
+            </button>
+            <button onClick={handleDelete} className="btn btn-danger">
+              Delete
+            </button>
+          </div>
+        )}
     </div>
   );
 };

@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './NavBar.css';
-import { toast } from 'react-toastify';
-import { useAuth } from '../../context/AuthContext'; 
-import axios from 'axios';
-import { FaUserCircle } from 'react-icons/fa'; // Import an icon for user avatar
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./NavBar.css";
+import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
+import axios from "axios";
+import { FaUserCircle } from "react-icons/fa"; // Import an icon for user avatar
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useAuth();
-  const [username, setUsername] = React.useState('');
+  const [username, setUsername] = React.useState("");
   const [avatar, setAvatar] = React.useState(null); // State for storing avatar URL
   const navigate = useNavigate();
 
@@ -17,16 +17,16 @@ const NavBar = () => {
       if (!isAuthenticated) return;
 
       try {
-        const response = await axios.get('/api/profile', {
+        const response = await axios.get("/api/profile", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
         setUsername(response.data.username);
-        setAvatar(response.data.avatar || null); 
+        setAvatar(response.data.avatar || null);
       } catch (error) {
-        console.error('Error fetching profile:', error);
-        toast.error('Failed to fetch profile');
+        console.error("Error fetching profile:", error);
+        toast.error("Failed to fetch profile");
       }
     };
 
@@ -35,17 +35,16 @@ const NavBar = () => {
 
   const handleLogout = () => {
     logout();
-    toast.success('Logged out successfully');
-    navigate('/login');
+    toast.success("Logged out successfully");
+    navigate("/login");
   };
 
-  const UserAvatar = () => (
+  const UserAvatar = () =>
     avatar ? (
       <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
     ) : (
       <FaUserCircle className="avatar-icon" />
-    )
-  );
+    );
 
   return (
     <nav className="navbar">
@@ -74,8 +73,12 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <Link to="/login" className="auth-link">Login</Link>
-            <Link to="/register" className="auth-link">Register</Link>
+            <Link to="/login" className="auth-link">
+              Login
+            </Link>
+            <Link to="/register" className="auth-link">
+              Register
+            </Link>
           </>
         )}
       </div>

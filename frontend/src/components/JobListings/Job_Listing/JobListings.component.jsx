@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import './JobListings.css';
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import "./JobListings.css";
+import { toast } from "react-toastify";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredJobs, setFilteredJobs] = useState([]);
-  const [userRole, setUserRole] = useState('');
+  const [userRole, setUserRole] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('/api/joblistings');
+        const response = await axios.get("/api/joblistings");
         setJobs(response.data);
         setFilteredJobs(response.data);
       } catch (error) {
-        console.error('Error fetching jobs:', error);
+        console.error("Error fetching jobs:", error);
       }
     };
 
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get('/api/profile', {
+        const response = await axios.get("/api/profile", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
         setUserRole(response.data.role);
       } catch (error) {
-        console.error('Error fetching user profile:', error);
+        console.error("Error fetching user profile:", error);
       }
     };
 
@@ -45,24 +45,27 @@ const JobListings = () => {
   };
 
   const filterJobs = (term) => {
-    if (term.trim() === '') {
+    if (term.trim() === "") {
       setFilteredJobs(jobs);
     } else {
-      const filtered = jobs.filter(job =>
-        job.title.toLowerCase().includes(term.toLowerCase()) ||
-        job.description.toLowerCase().includes(term.toLowerCase()) ||
-        job.employer?.username.toLowerCase().includes(term.toLowerCase())
+      const filtered = jobs.filter(
+        (job) =>
+          job.title.toLowerCase().includes(term.toLowerCase()) ||
+          job.description.toLowerCase().includes(term.toLowerCase()) ||
+          job.employer?.username.toLowerCase().includes(term.toLowerCase())
       );
       setFilteredJobs(filtered);
     }
   };
 
   const handlePostJob = () => {
-    if (userRole !== 'EMPLOYER' && userRole !== 'ADMIN') {
-      toast.warn('You must be an Employer or Admin to post a job. Please update your role in your profile.');
-      navigate('/profile'); // Redirect to profile page for role change
+    if (userRole !== "EMPLOYER" && userRole !== "ADMIN") {
+      toast.warn(
+        "You must be an Employer or Admin to post a job. Please update your role in your profile."
+      );
+      navigate("/profile"); // Redirect to profile page for role change
     } else {
-      navigate('/joblistings/add'); // Proceed to post job
+      navigate("/joblistings/add"); // Proceed to post job
     }
   };
 
@@ -79,7 +82,7 @@ const JobListings = () => {
           />
         </div>
         {/* Show "Post a Job" button if the user is an employer or admin */}
-        {(userRole === 'EMPLOYER' || userRole === 'ADMIN') && (
+        {(userRole === "EMPLOYER" || userRole === "ADMIN") && (
           <button className="post-job-button" onClick={handlePostJob}>
             Post a Job
           </button>
@@ -87,7 +90,7 @@ const JobListings = () => {
       </div>
       <div className="job-list">
         <ol>
-          {filteredJobs.map(job => (
+          {filteredJobs.map((job) => (
             <li key={job.id}>
               <Link to={`/joblistings/${job.id}`} className="job-link">
                 <div className="job-card">

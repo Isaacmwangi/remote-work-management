@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import './EditJobListing.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import "./EditJobListing.css";
 
 const EditJobListing = () => {
   const { id } = useParams();
   const [job, setJob] = useState({});
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    requirements: '',
-    location: '',
+    title: "",
+    description: "",
+    requirements: "",
+    location: "",
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const EditJobListing = () => {
       try {
         const response = await axios.get(`/api/joblistings/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
         setJob(response.data);
@@ -32,7 +32,7 @@ const EditJobListing = () => {
         });
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching job listing', error);
+        console.error("Error fetching job listing", error);
         setLoading(false);
       }
     };
@@ -51,17 +51,17 @@ const EditJobListing = () => {
     try {
       await axios.put(`/api/joblistings/${id}`, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      navigate('/joblistings');
+      navigate("/joblistings");
     } catch (error) {
-      console.error('Error updating job listing', error);
+      console.error("Error updating job listing", error);
     }
   };
 
   const handleCancel = () => {
-    navigate('/joblistings');
+    navigate("/joblistings");
   };
 
   return (
@@ -102,8 +102,12 @@ const EditJobListing = () => {
             onChange={handleChange}
           />
           <div className="button-group">
-            <button onClick={handleSave} className="button save-button">Save</button>
-            <button onClick={handleCancel} className="button cancel-button">Cancel</button>
+            <button onClick={handleSave} className="button save-button">
+              Save
+            </button>
+            <button onClick={handleCancel} className="button cancel-button">
+              Cancel
+            </button>
           </div>
         </div>
       )}

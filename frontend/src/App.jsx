@@ -1,10 +1,10 @@
 // src/App.jsx
-import React from 'react';
-import AppRouter from './routes/Router';
-import './App.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-import { AuthProvider } from './context/AuthContext'; 
+import React from "react";
+import AppRouter from "./routes/Router";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (

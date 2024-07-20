@@ -1,8 +1,6 @@
-// Final_Project/remote-work-management-backend/src/controllers/userController.js
-
-const { prisma } = require('../config/db');
-const path = require('path');
-const fs = require('fs');
+const { prisma } = require("../config/db");
+const path = require("path");
+const fs = require("fs");
 
 // Retrieve user profile
 const getUserProfile = async (req, res) => {
@@ -21,21 +19,41 @@ const getUserProfile = async (req, res) => {
       },
     });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     res.json(user);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error retrieving user profile' });
+    res.status(500).json({ error: "Error retrieving user profile" });
   }
 };
 
 // Update user profile
 const updateUserProfile = async (req, res) => {
   const userId = req.user.id;
-  const { firstName, secondName, username, email, location, address, role, country, company } = req.body;
+  const {
+    firstName,
+    secondName,
+    username,
+    email,
+    location,
+    address,
+    role,
+    country,
+    company,
+  } = req.body;
 
-  let updatedUser = { firstName, secondName, username, email, location, address, role, country, company };
+  let updatedUser = {
+    firstName,
+    secondName,
+    username,
+    email,
+    location,
+    address,
+    role,
+    country,
+    company,
+  };
 
   try {
     const user = await prisma.user.update({
@@ -58,7 +76,6 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
@@ -76,7 +93,7 @@ const getAllUsers = async (req, res) => {
     res.json(users);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error retrieving users' });
+    res.status(500).json({ error: "Error retrieving users" });
   }
 };
 
@@ -85,7 +102,7 @@ const getUserById = async (req, res) => {
   const userId = parseInt(req.params.id);
 
   if (!userId || isNaN(userId)) {
-    return res.status(400).json({ message: 'Invalid user ID provided' });
+    return res.status(400).json({ message: "Invalid user ID provided" });
   }
 
   try {
@@ -103,13 +120,13 @@ const getUserById = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(user);
   } catch (error) {
-    console.error('Error retrieving user:', error);
-    res.status(500).json({ error: 'Error retrieving user' });
+    console.error("Error retrieving user:", error);
+    res.status(500).json({ error: "Error retrieving user" });
   }
 };
 
@@ -185,24 +202,29 @@ const getResume = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     if (!user.resume) {
-      return res.status(404).json({ message: 'Resume not found' });
+      return res.status(404).json({ message: "Resume not found" });
     }
 
-    const resumePath = path.resolve(__dirname, '..', 'uploads', path.basename(user.resume));
+    const resumePath = path.resolve(
+      __dirname,
+      "..",
+      "uploads",
+      path.basename(user.resume)
+    );
 
     if (!fs.existsSync(resumePath)) {
-      console.error('Resume file does not exist:', resumePath);
-      return res.status(404).json({ message: 'Resume file not found' });
+      console.error("Resume file does not exist:", resumePath);
+      return res.status(404).json({ message: "Resume file not found" });
     }
 
     res.sendFile(resumePath);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error retrieving resume' });
+    res.status(500).json({ error: "Error retrieving resume" });
   }
 };
 
@@ -211,10 +233,10 @@ const updateResume = async (req, res) => {
   const userId = req.user.id;
 
   if (!req.file) {
-    return res.status(400).json({ error: 'No file uploaded' });
+    return res.status(400).json({ error: "No file uploaded" });
   }
 
-  const resumePath = path.join(__dirname, '..', 'uploads', req.file.filename);
+  const resumePath = path.join(__dirname, "..", "uploads", req.file.filename);
 
   try {
     const user = await prisma.user.update({
@@ -223,13 +245,12 @@ const updateResume = async (req, res) => {
       select: { resume: true },
     });
 
-    res.json({ message: 'Resume updated successfully', user });
+    res.json({ message: "Resume updated successfully", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error updating resume' });
+    res.status(500).json({ error: "Error updating resume" });
   }
 };
-
 
 module.exports = {
   getUserProfile,
@@ -238,6 +259,6 @@ module.exports = {
   getUserById,
   uploadResume,
   deleteResume,
-  getResume, 
+  getResume,
   updateResume,
 };

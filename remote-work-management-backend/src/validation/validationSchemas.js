@@ -1,4 +1,3 @@
-// Final_Project/remote-work-management-backend/src/validation/validationSchemas.js
 const Joi = require('joi');
 
 const registerSchema = Joi.object({

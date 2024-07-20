@@ -75,7 +75,7 @@ const AvailableJobs = ({ onJobCountChange }) => {
           />
         </div>
         {/* Show "Post a Job" button if the user is an employer or admin */}
-        {(userRole === 'EMPLOYER' || userRole === 'ADMIN') && (
+        {(userRole === "EMPLOYER" || userRole === "ADMIN") && (
           <Link to="/joblistings/add" className="post-job-button">
             Post a Job
           </Link>
@@ -95,10 +95,7 @@ const AvailableJobs = ({ onJobCountChange }) => {
               <strong>Posted by:</strong> {job.employer?.username || "Unknown"}
             </p>
             {/* Link to job details page */}
-            <Link
-              to={`/joblistings/${job.id}`}
-              className="view-details-link"
-            >
+            <Link to={`/joblistings/${job.id}`} className="view-details-link">
               View Details
             </Link>
           </div>

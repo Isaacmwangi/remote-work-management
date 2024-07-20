@@ -1,4 +1,3 @@
-// Final_Project/frontend/src/components/Auth/Register/Register.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";

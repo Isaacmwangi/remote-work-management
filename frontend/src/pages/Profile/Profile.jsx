@@ -190,21 +190,48 @@ const Profile = () => {
               value={formData.company || ""}
               onChange={handleChange}
             />
-            <button onClick={handleSave} className="btn btn-primary">Save</button>
-            <button onClick={handleCancel} className="btn btn-secondary">Cancel</button>
+            <button onClick={handleSave} className="btn btn-primary">
+              Save
+            </button>
+            <button onClick={handleCancel} className="btn btn-secondary">
+              Cancel
+            </button>
           </div>
         ) : (
           <div className="profile-info">
-            <p><b>First Name:</b> {user.firstName}</p>
-            <p><b>Second Name:</b> {user.secondName}</p>
-            <p><b>Username:</b> {user.username}</p>
-            <p><b>Email:</b> {user.email}</p>
-            <p><b>Country:</b> {user.country}</p>
-            <p><b>Location:</b> {user.location}</p>
-            <p><b>Address:</b> {user.address}</p>
-            <p><b>Role:</b> {user.role === 'JOB_SEEKER' ? 'Job Seeker' : 'Employer'}</p>
-            {user.company && <p><b>Company:</b> {user.company}</p>}
-            <button onClick={handleEdit} className="btn btn-primary">Edit Profile</button>
+            <p>
+              <b>First Name:</b> {user.firstName}
+            </p>
+            <p>
+              <b>Second Name:</b> {user.secondName}
+            </p>
+            <p>
+              <b>Username:</b> {user.username}
+            </p>
+            <p>
+              <b>Email:</b> {user.email}
+            </p>
+            <p>
+              <b>Country:</b> {user.country}
+            </p>
+            <p>
+              <b>Location:</b> {user.location}
+            </p>
+            <p>
+              <b>Address:</b> {user.address}
+            </p>
+            <p>
+              <b>Role:</b>{" "}
+              {user.role === "JOB_SEEKER" ? "Job Seeker" : "Employer"}
+            </p>
+            {user.company && (
+              <p>
+                <b>Company:</b> {user.company}
+              </p>
+            )}
+            <button onClick={handleEdit} className="btn btn-primary">
+              Edit Profile
+            </button>
           </div>
         )}
       </section>
@@ -224,7 +251,10 @@ const Profile = () => {
           <div className="resume-upload">
             {uploading ? (
               <div className="upload-status">
-                <button onClick={handleResumeCancel} className="btn btn-warning">
+                <button
+                  onClick={handleResumeCancel}
+                  className="btn btn-warning"
+                >
                   Cancel Upload
                 </button>
                 <p>Uploading...</p>
@@ -235,7 +265,10 @@ const Profile = () => {
                 {resumeUploaded && (
                   <p>
                     Resume uploaded.{" "}
-                    <button onClick={() => setResumeUploaded(false)} className="btn btn-info">
+                    <button
+                      onClick={() => setResumeUploaded(false)}
+                      className="btn btn-info"
+                    >
                       Upload Another Resume
                     </button>
                   </p>
