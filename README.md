@@ -65,7 +65,12 @@ When you first open the application, you'll be greeted with the Home Page.
 ### Register or Login
 If you're new to the platform, click on the "Get Started" button to register.
 
-![Register Page](./frontend/src/assets/Screenshot_loginPage.jpg)
+![Getting Started Page](./frontend/src/assets/Screenshot_GetStarted1.jpg)
+
+This will direct you to Register page were you will be required to fill all the form given to register
+
+![Register Page](./frontend/src/assets/Screenshot_registerPage.jpg)
+
 
 If you're already a user, click on the "Login" link to access your account.
 
@@ -74,10 +79,10 @@ If you're already a user, click on the "Login" link to access your account.
 ### Dashboard
 Upon successful login, you'll be redirected to your dashboard where you can manage all your remote work needs.
 
-![Dashboard](./remote-work-management-frontend/src/assets/Screenshot_Dashboard.jpg)
+![Dashboard](./frontend/src/assets/Screenshot_Dashboard.jpg)
 
 ### Available
-From the dashboard, you can view available job listings. You can filter and search for jobs to find opportunities that match your interests. This show only the top 6 jobs. Below the available Jobs there is a button to view all jobs which will direct you to another page with all jobs.
+From the dashboard, you can view available job listings. You can filter and search for jobs to find opportunities that match your interests. This shows only the top 6 jobs. Below the available Jobs, there is a button to view all jobs which will direct you to another page with all jobs.
 
 ![Available Jobs](./frontend/src/assets/Screenshot_AvailableJobs.jpg)
 

@@ -12,14 +12,15 @@ This project is a comprehensive platform for managing remote work, featuring use
 
 ## Technologies Used
 
-- React
-- JavaScript (ES6+)
-- CSS
-- Axios
-- React Router
-- Context API
-- Toastify
-- FontAwesome
+- **Framework**: React.js
+- **UI Development**: Responsive interfaces for profiles, job listings, and analytics dashboards
+- **Styling**: CSS
+- **HTTP Client**: Axios
+- **Routing**: React Router
+- **State Management**: Context API
+- **Notifications**: Toastify
+- **Icons**: FontAwesome
+
 
 ## Getting Started
 
@@ -31,7 +32,11 @@ When you first open the application, you'll be greeted with the Home Page.
 ### Register or Login
 If you're new to the platform, click on the "Get Started" button to register.
 
-![Register Page](./src/assets/Screenshot_loginPage.jpg)
+![Getting Started Page](./src/assets/Screenshot_GetStarted1.jpg)
+
+This will direct you to Register page were you will be required to fill all the form given to register
+![Register Page](./src/assets/Screenshot_registerPage.jpg)
+
 
 If you're already a user, click on the "Login" link to access your account.
 
