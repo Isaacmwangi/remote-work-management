@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Profile.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Profile = () => {
   const [user, setUser] = useState({});
@@ -119,7 +120,7 @@ const Profile = () => {
   return (
     <div className="profile-container">
       <header className="profile-header">
-        <h1>My Profile</h1>
+        <h1><i className="fas fa-user-circle"></i> My Profile</h1>
       </header>
 
       <section className="profile-info-section">
@@ -191,60 +192,41 @@ const Profile = () => {
               onChange={handleChange}
             />
             <button onClick={handleSave} className="btn btn-primary">
-              Save
+              <i className="fas fa-save"></i> Save
             </button>
             <button onClick={handleCancel} className="btn btn-secondary">
-              Cancel
+              <i className="fas fa-times"></i> Cancel
             </button>
           </div>
         ) : (
           <div className="profile-info">
-            <p>
-              <b>First Name:</b> {user.firstName}
-            </p>
-            <p>
-              <b>Second Name:</b> {user.secondName}
-            </p>
-            <p>
-              <b>Username:</b> {user.username}
-            </p>
-            <p>
-              <b>Email:</b> {user.email}
-            </p>
-            <p>
-              <b>Country:</b> {user.country}
-            </p>
-            <p>
-              <b>Location:</b> {user.location}
-            </p>
-            <p>
-              <b>Address:</b> {user.address}
-            </p>
-            <p>
-              <b>Role:</b>{" "}
-              {user.role === "JOB_SEEKER" ? "Job Seeker" : "Employer"}
-            </p>
+            <p><i className="fas fa-user"></i> <b>First Name:</b> {user.firstName}</p>
+            <p><i className="fas fa-user"></i> <b>Second Name:</b> {user.secondName}</p>
+            <p><i className="fas fa-user-tag"></i> <b>Username:</b> {user.username}</p>
+            <p><i className="fas fa-envelope"></i> <b>Email:</b> {user.email}</p>
+            <p><i className="fas fa-globe"></i> <b>Country:</b> {user.country}</p>
+            <p><i className="fas fa-map-marker-alt"></i> <b>Location:</b> {user.location}</p>
+            <p><i className="fas fa-home"></i> <b>Address:</b> {user.address}</p>
+            <p><i className="fas fa-briefcase"></i> <b>Role:</b> {user.role === "JOB_SEEKER" ? "Job Seeker" : "Employer"}</p>
             {user.company && (
-              <p>
-                <b>Company:</b> {user.company}
-              </p>
+              <p><i className="fas fa-building"></i> <b>Company:</b> {user.company}</p>
             )}
             <button onClick={handleEdit} className="btn btn-primary">
-              Edit Profile
+              <i className="fas fa-edit"></i> Edit Profile
             </button>
           </div>
         )}
       </section>
 
       <section className="resume-section">
-        <h2>Resume</h2>
+        <h2><i className="fas fa-file-alt"></i> Resume</h2>
         {user.resume ? (
           <div className="resume-actions">
             <button onClick={openResumePage} className="btn btn-success">
-              View Resume
+              <i className="fas fa-eye"></i> View Resume
             </button>
             <button onClick={handleResumeDelete} className="btn btn-danger">
-              Delete Resume
+              <i className="fas fa-trash"></i> Delete Resume
             </button>
           </div>
         ) : (
@@ -255,7 +237,7 @@ const Profile = () => {
                   onClick={handleResumeCancel}
                   className="btn btn-warning"
                 >
-                  Cancel Upload
+                  <i className="fas fa-times"></i> Cancel Upload
                 </button>
                 <p>Uploading...</p>
               </div>
@@ -269,7 +251,7 @@ const Profile = () => {
                       onClick={() => setResumeUploaded(false)}
                       className="btn btn-info"
                     >
-                      Upload Another Resume
+                      <i className="fas fa-upload"></i> Upload Another Resume
                     </button>
                   </p>
                 )}
@@ -280,23 +262,26 @@ const Profile = () => {
       </section>
 
       <section className="details-section">
-        <h2>More Details</h2>
+        <h2><i className="fas fa-info-circle"></i> More Details</h2>
         <div className="details-container">
           <div className="details-category">
-            <h3>My Job Posts</h3>
+            <h3><i className="fas fa-briefcase"></i> My Job Posts</h3>
             <ul>
               {user.jobListings?.map((job) => (
                 <li key={job.id}>
-                  <a href="" onClick={() => handleJobClick(job.id)}>
+                  <button
+                    onClick={() => handleJobClick(job.id)}
+                    className="btn btn-link"
+                  >
                     {job.title}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="details-category">
-            <h3>Applications</h3>
+            <h3><i className="fas fa-file-alt"></i> Applications</h3>
             <ul>
               {user.applications?.map((app) => (
                 <li key={app.id}>{app.jobListing.title}</li>
@@ -305,7 +290,18 @@ const Profile = () => {
           </div>
 
           <div className="details-category">
-            <h3>Teams</h3>
+            <h3><i className="fas fa-calendar-check"></i> Upcoming Interviews</h3>
+            <ul>
+              {user.interviews?.map((interview) => (
+                <li key={interview.id}>
+                  {interview.title} on {new Date(interview.date).toLocaleDateString()}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="details-category">
+            <h3><i className="fas fa-users"></i> Teams</h3>
             <ul>
               {user.teams?.map((team) => (
                 <li key={team.id}>{team.name}</li>
@@ -314,7 +310,7 @@ const Profile = () => {
           </div>
 
           <div className="details-category">
-            <h3>Tasks</h3>
+            <h3><i className="fas fa-tasks"></i> Tasks</h3>
             <ul>
               {user.tasks?.map((task) => (
                 <li key={task.id}>{task.title}</li>
@@ -323,7 +319,7 @@ const Profile = () => {
           </div>
 
           <div className="details-category">
-            <h3>Sent Messages</h3>
+            <h3><i className="fas fa-paper-plane"></i> Sent Messages</h3>
             <ul>
               {user.sentMessages?.map((msg) => (
                 <li key={msg.id}>{msg.content}</li>
@@ -332,7 +328,7 @@ const Profile = () => {
           </div>
 
           <div className="details-category">
-            <h3>Received Messages</h3>
+            <h3><i className="fas fa-inbox"></i> Received Messages</h3>
             <ul>
               {user.receivedMessages?.map((msg) => (
                 <li key={msg.id}>{msg.content}</li>
