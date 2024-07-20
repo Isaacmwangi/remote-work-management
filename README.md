@@ -68,12 +68,15 @@ If you're new to the platform, click on the "Get Started" button to register.
 
 This will direct you to Register page were you will be required to fill all the form given to register
 
-![Register Page](./frontend/src/assets/Screenshot_registerPage.jpg)
+### Register
+Fill all the details needed
+![Register Page](./src/assets/Screenshot_registerPage.jpg)
 
 
+### Login
 If you're already a user, click on the "Login" link to access your account.
 
-![Login Page](./frontend/src/assets/Screenshot_loginPage.jpg)
+![Login Page](./src/assets/Screenshot_loginPage.jpg)
 
 ### Dashboard
 Upon successful login, you'll be redirected to your dashboard where you can manage all your remote work needs.
