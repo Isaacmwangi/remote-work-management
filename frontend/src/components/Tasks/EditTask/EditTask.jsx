@@ -1,4 +1,3 @@
-// Final_Project/frontend/src/components/Tasks/EditTask/EditTask.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -29,7 +28,10 @@ const EditTask = () => {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           }),
         ]);
-        setTask(taskRes.data);
+        setTask({
+          ...taskRes.data,
+          due_date: taskRes.data.due_date.split('T')[0],
+        });
         setProjects(projectsRes.data);
         setUsers(usersRes.data);
         setLoading(false);
@@ -50,7 +52,10 @@ const EditTask = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/tasks/${id}`, task, {
+      await axios.put(`/api/tasks/${id}`, {
+        ...task,
+        due_date: new Date(task.due_date).toISOString(), 
+      }, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       toast.success('Task updated successfully!');
@@ -79,7 +84,7 @@ const EditTask = () => {
             <select
               id="project_id"
               name="project_id"
-              value={task.project_id}
+              value={task.project_id || ''}
               onChange={handleChange}
               required
             >
@@ -98,7 +103,7 @@ const EditTask = () => {
             <select
               id="assigned_to"
               name="assigned_to"
-              value={task.assigned_to}
+              value={task.assigned_to || ''}
               onChange={handleChange}
               required
             >
@@ -118,7 +123,7 @@ const EditTask = () => {
               type="text"
               id="title"
               name="title"
-              value={task.title}
+              value={task.title || ''}
               onChange={handleChange}
               placeholder="Enter task title"
               required
@@ -131,7 +136,7 @@ const EditTask = () => {
             <textarea
               id="description"
               name="description"
-              value={task.description}
+              value={task.description || ''}
               onChange={handleChange}
               placeholder="Enter task description"
               required
@@ -144,7 +149,7 @@ const EditTask = () => {
             <select
               id="status"
               name="status"
-              value={task.status}
+              value={task.status || ''}
               onChange={handleChange}
             >
               <option value="Pending">Pending</option>
@@ -160,7 +165,7 @@ const EditTask = () => {
               type="date"
               id="due_date"
               name="due_date"
-              value={task.due_date}
+              value={task.due_date || ''}
               onChange={handleChange}
               required
             />

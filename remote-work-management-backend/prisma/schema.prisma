@@ -35,6 +35,7 @@ model User {
   tasks           Task[]
   sentMessages    Message[] @relation("SentMessages")
   notifications   Notification[]
+  memberTeams     Team[]    @relation("TeamMembers")
 }
 
 model Notification {
@@ -89,9 +90,8 @@ model Team {
   messages    Message[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  members     User[]    @relation("TeamMembers")
 }
-
-
 
 model Project {
   id          Int    @id @default(autoincrement())
@@ -114,7 +114,6 @@ model Task {
   project      Project  @relation(fields: [project_id], references: [id])
   assignedUser User     @relation(fields: [assigned_to], references: [id])
 }
-
 
 model Message {
   id        Int      @id @default(autoincrement())

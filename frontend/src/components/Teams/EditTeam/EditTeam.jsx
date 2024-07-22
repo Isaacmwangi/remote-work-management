@@ -10,8 +10,13 @@ const EditTeam = () => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
+    members: [],
   });
+  const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +30,7 @@ const EditTeam = () => {
         setFormData({
           name: response.data.name,
           description: response.data.description,
+          members: response.data.members,
         });
         setLoading(false);
       } catch (error) {
@@ -34,14 +40,83 @@ const EditTeam = () => {
       }
     };
 
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("/api/users", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setAllUsers(response.data);
+        setFilteredUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching users", error);
+        toast.error("Error fetching users");
+      }
+    };
+
     fetchTeam();
+    fetchUsers();
   }, [id]);
+
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setFilteredUsers(allUsers);
+    } else {
+      const filtered = allUsers.filter(
+        (user) =>
+          user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredUsers(filtered);
+    }
+  }, [searchTerm, allUsers]);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handleAddMember = async () => {
+    if (selectedUser) {
+      try {
+        await axios.post("/api/teams/add-member", { teamId: id, userId: selectedUser.id }, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setFormData({
+          ...formData,
+          members: [...formData.members, selectedUser],
+        });
+        setSelectedUser(null); // Clear selected user
+        toast.success("Member added successfully");
+      } catch (error) {
+        console.error("Error adding member", error);
+        toast.error("Error adding member");
+      }
+    }
+  };
+
+  const handleRemoveMember = async (userId) => {
+    try {
+      await axios.post("/api/teams/remove-member", { teamId: id, userId }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setFormData({
+        ...formData,
+        members: formData.members.filter(member => member.id !== userId),
+      });
+      toast.success("Member removed successfully");
+    } catch (error) {
+      console.error("Error removing member", error);
+      toast.error("Error removing member");
+    }
   };
 
   const handleSave = async () => {
@@ -91,11 +166,56 @@ const EditTeam = () => {
             onChange={handleChange}
             placeholder="Enter team description"
           ></textarea>
-          <div className="button-group">
-            <button onClick={handleSave} className="button save-button">
+          <label htmlFor="members">
+            <i className="fas fa-users"></i> Team Members:
+          </label>
+          <div className="members-list">
+            {formData.members.map(member => (
+              <div key={member.id} className="member-item">
+                {member.firstName} {member.lastName} ({member.email})
+                <button onClick={() => handleRemoveMember(member.id)} className="remove-button">
+                  <i className="fas fa-user-minus"></i> Remove
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="form-group">
+            <label htmlFor="user-search">
+              <i className="fas fa-search"></i> Search Users:
+            </label>
+            <input
+              type="text"
+              id="user-search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search by username, name, or email"
+            />
+            <div className="user-search-results">
+              {selectedUser && (
+                <div className="selected-user">
+                  <p><strong>Name:</strong> {selectedUser.firstName} {selectedUser.lastName}</p>
+                  <p><strong>Email:</strong> {selectedUser.email}</p>
+                  <button onClick={handleAddMember} className="add-button">
+                    <i className="fas fa-user-plus"></i> Add
+                  </button>
+                </div>
+              )}
+              <ul className="user-list">
+                {filteredUsers
+                  .filter(user => !formData.members.find(member => member.id === user.id))
+                  .map(user => (
+                    <li key={user.id} onClick={() => setSelectedUser(user)}>
+                      {user.firstName} {user.lastName} ({user.username})
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          </div>
+          <div className="form-actions">
+            <button className="btn btn-save" onClick={handleSave}>
               <i className="fas fa-save"></i> Save
             </button>
-            <button onClick={handleCancel} className="button cancel-button">
+            <button className="btn btn-cancel" onClick={handleCancel}>
               <i className="fas fa-times"></i> Cancel
             </button>
           </div>

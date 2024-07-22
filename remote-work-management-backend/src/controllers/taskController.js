@@ -63,6 +63,7 @@ const getTaskById = async (req, res) => {
   }
 };
 
+
 const updateTask = async (req, res) => {
   const { id } = req.params;
   const { title, description, status, due_date } = req.body;

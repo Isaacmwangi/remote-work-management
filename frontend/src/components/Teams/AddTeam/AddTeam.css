@@ -16,7 +16,7 @@
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
@@ -45,6 +45,71 @@
 .form-group textarea {
     resize: vertical;
     min-height: 120px;
+}
+
+.member-selection {
+    position: relative;
+}
+
+.user-dropdown {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 5px;
+    margin-top: 0.25rem;
+}
+
+.user-dropdown li {
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.user-dropdown li:hover {
+    background-color: #f0f0f0;
+}
+
+.selected-members {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.selected-member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f8f9fa;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.selected-member:hover {
+    background-color: #e9ecef;
+}
+
+.remove-button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.remove-button:hover {
+    background: #c82333;
+    transform: scale(1.05);
 }
 
 .submit-button {
@@ -78,4 +143,8 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+li {
+    list-style: none;
 }

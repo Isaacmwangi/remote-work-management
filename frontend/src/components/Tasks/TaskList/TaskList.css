@@ -1,61 +1,120 @@
-.task-list-container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.add-team-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.6s ease-in-out;
 }
 
-.task-list-heading {
-    font-size: 24px;
-    margin-bottom: 20px;
+.add-team-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-family: 'Arial', sans-serif;
 }
 
-.button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px;
+.form-group {
+    margin-bottom: 1rem;
 }
 
-.add-task-button {
-    background: #007bff;
-    display: inline-block;
-    margin-bottom: 20px;
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 600;
 }
 
-.task-list-table {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 100%;
-    border-collapse: collapse;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.task-list-table th,
-.task-list-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-.task-list-table th {
-    background-color: #f4f4f4;
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
-.button.view-button {
-    background: #17a2b8;
+.member-selection {
+    position: relative;
 }
 
-.button.edit-button {
-    background: #ffc107;
+.selected-members {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
 }
 
-.button.delete-button {
+.selected-member {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #f8f9fa;
+    margin-bottom: 0.5rem;
+}
+
+.remove-button {
     background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.button.icon {
-    margin-right: 5px;
+.remove-button:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.submit-button:active {
+    transform: scale(0.98);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -1,16 +1,16 @@
 .edit-team-container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 2rem auto;
     padding: 2rem;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.6s ease-in-out;
 }
 
 .edit-team-container h1 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: #333;
     font-family: 'Arial', sans-serif;
 }
@@ -18,12 +18,13 @@
 .edit-team-form {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
 
 .edit-team-form label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #555;
+    color: #666;
     font-weight: 600;
 }
 
@@ -32,7 +33,7 @@
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 6px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -48,48 +49,132 @@
     min-height: 120px;
 }
 
-.button-group {
+.members-list {
+    margin: 1rem 0;
+}
+
+.member-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    }
+    
+    .remove-button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+    }
+    
+    .remove-button
+    {
+    background: #c82333;
+    transform: scale(1.05);
+    }
+    
+    .user-search-results {
+    margin-top: 1rem;
+    }
+    
+    .selected-user {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    background: #fff;
+    margin-bottom: 1rem;
+    }
+    
+    .add-button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+    }
+    
+    .add-button
+    {
+    background: #218838;
+    transform: scale(1.05);
+    }
+    
+    .user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    }
+    
+    .user-list li {
+    cursor: pointer;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    background: #fff;
+    transition: background 0.3s ease;
+    }
+    
+    .user-list li
+    {
+    background: #f0f0f0;
+    }
+    
+    .form-actions {
     display: flex;
     gap: 1rem;
     justify-content: center;
     margin-top: 1rem;
-}
-
-.button {
+    }
+    
+    .btn {
     padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 1rem;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.save-button {
+    }
+    
+    .btn-save {
     background-color: #28a745;
-}
-
-.save-button:hover {
+    }
+    
+    .btn-save
+    {
     background-color: #218838;
     transform: scale(1.05);
-}
-
-.cancel-button {
+    }
+    
+    .btn-cancel {
     background-color: #dc3545;
-}
-
-.cancel-button:hover {
+    }
+    
+    .btn-cancel
+    {
     background-color: #c82333;
     transform: scale(1.05);
-}
-
-@keyframes fadeIn {
+    }
+    
+    @keyframes fadeIn {
     from {
-        opacity: 0;
-        transform: translateY(10px);
+    opacity: 0;
+    transform: translateY(10px);
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
     }
-}
+    }
