@@ -1,4 +1,3 @@
-// Final_Project/remote-work-management-backend/src/controllers/authController.js
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');

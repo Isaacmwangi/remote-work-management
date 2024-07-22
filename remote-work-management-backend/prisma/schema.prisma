@@ -87,7 +87,11 @@ model Team {
   employer    User      @relation(fields: [employer_id], references: [id])
   projects    Project[]
   messages    Message[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
+
+
 
 model Project {
   id          Int    @id @default(autoincrement())
@@ -110,6 +114,7 @@ model Task {
   project      Project  @relation(fields: [project_id], references: [id])
   assignedUser User     @relation(fields: [assigned_to], references: [id])
 }
+
 
 model Message {
   id        Int      @id @default(autoincrement())

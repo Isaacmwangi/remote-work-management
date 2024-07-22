@@ -1,15 +1,14 @@
-// src/components/common/PrivateRouteForEmployers.jsx
-
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const PrivateRouteForEmployers = ({ element: Component, ...rest }) => {
   const { isAuthenticated } = useAuth();
   const [isEmployer, setIsEmployer] = useState(false);
   const [loading, setLoading] = useState(true);
+  const toastDisplayed = useRef(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -17,10 +16,15 @@ const PrivateRouteForEmployers = ({ element: Component, ...rest }) => {
         try {
           const response = await axios.get('/api/profile', {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
           });
-          setIsEmployer(response.data.role === 'EMPLOYER' || 'ADMIN');
+          const role = response.data.role;
+          setIsEmployer(role === 'EMPLOYER' || role === 'ADMIN');
+          if (!(role === 'EMPLOYER' || role === 'ADMIN') && !toastDisplayed.current) {
+            toast.error('You need to be an employer to post a job. Please update your profile.');
+            toastDisplayed.current = true;
+          }
           setLoading(false);
         } catch (error) {
           console.error('Error fetching user role:', error);
@@ -30,6 +34,7 @@ const PrivateRouteForEmployers = ({ element: Component, ...rest }) => {
 
       fetchUserRole();
     } else {
+      toast.error("Please log in or register to access this page.");
       setLoading(false);
     }
   }, [isAuthenticated]);
@@ -41,7 +46,7 @@ const PrivateRouteForEmployers = ({ element: Component, ...rest }) => {
   return isAuthenticated && isEmployer ? (
     <Component {...rest} />
   ) : (
-    <Navigate to="/" />
+    <Navigate to="/profile" />
   );
 };
 

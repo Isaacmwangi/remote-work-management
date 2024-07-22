@@ -21,6 +21,7 @@ const Register = () => {
     resume: null,
   });
 
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 

@@ -1,42 +1,90 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Dashboard.css";
 import AvailableJobs from "../JobListings/Available_Jobs/AvailableJobs";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Dashboard = () => {
+  const [projectCount, setProjectCount] = useState(0);
+  const [teamMemberCount, setTeamMemberCount] = useState(0);
+  const [completedTasksCount, setCompletedTasksCount] = useState(0);
   const [jobCount, setJobCount] = useState(0);
 
-  const handleJobCountChange = (count) => {
-    setJobCount(count);
-  };
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [projectsResponse, teamResponse, completedTasksResponse, jobsResponse] = await Promise.all([
+          axios.get('/api/projects'),
+          axios.get('/api/teams'),
+          axios.get('/api/tasks'),
+          axios.get('/api/joblistings')
+        ]);
+
+        setProjectCount(projectsResponse.data.length);
+        setTeamMemberCount(teamResponse.data.length);
+        setCompletedTasksCount(completedTasksResponse.data.length);
+        setJobCount(jobsResponse.data.length);
+      } catch (error) {
+        console.error('Error fetching counts:', error.response ? error.response.data : error.message);
+        toast.error(
+          <div><i className="fas fa-exclamation-triangle"></i> Failed to fetch data!</div>, 
+          {
+            position: toast.POSITION.BOTTOM_RIGHT,
+            autoClose: 5000,
+          }
+        );
+      }
+    };
+
+    fetchCounts();
+  }, []);
 
   return (
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Welcome Back to Remote Work Management</h1>
-        <p>This is Your dashboard to manage all your remote work needs.</p>
+        <p>This is your dashboard to manage all your remote work needs.</p>
       </header>
 
       <section className="dashboard-stats">
         <div className="stat-card">
+          <i className="fas fa-project-diagram icon"></i>
           <h2>Projects</h2>
-          <p>7 Ongoing</p>
+          <p>{projectCount} Ongoing</p>
         </div>
         <div className="stat-card">
+          <i className="fas fa-users icon"></i>
           <h2>Team Members</h2>
-          <p>5 Active</p>
+          <p>{teamMemberCount} Active</p>
         </div>
         <div className="stat-card">
+          <i className="fas fa-tasks icon"></i>
           <h2>Tasks Completed</h2>
-          <p>5 Tasks</p>
+          <p>{completedTasksCount} Tasks</p>
         </div>
         <div className="stat-card">
+          <i className="fas fa-briefcase icon"></i>
           <h2>Available Jobs</h2>
           <p>{jobCount} Jobs</p>
         </div>
       </section>
 
+      <section className="dashboard-actions">
+        <h2>Actions</h2>
+        <div className="action-buttons">
+          <Link to="/projects" className="action-button"><i className="fas fa-project-diagram"></i> View Projects</Link>
+          <Link to="/tasks" className="action-button"><i className="fas fa-tasks"></i> View Tasks</Link>
+          <Link to="/teams" className="action-button"><i className="fas fa-users"></i> View Team Members</Link>
+          <Link to="/completed-tasks" className="action-button"><i className="fas fa-check-double"></i> View Completed Tasks</Link>
+          <Link to="/joblistings" className="action-button"><i className="fas fa-briefcase"></i> View Available Jobs</Link>
+        </div>
+      </section>
+
       <section className="dashboard-content">
-        <AvailableJobs onJobCountChange={handleJobCountChange} />
+        <AvailableJobs onJobCountChange={setJobCount} />
       </section>
     </div>
   );

@@ -1,19 +1,17 @@
 
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-function PrivateRoute({ component: Component, ...rest }) {
-  const isAuthenticated = !!localStorage.getItem('token');
+const PrivateRoute = ({ element: Component, ...rest }) => {
+	const isAuthenticated = !!localStorage.getItem('token');
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
-      }
-      
-    />
-  );
-}
+	if (!isAuthenticated) {
+		toast.error("Please log in or register to access this page.");
+		return <Navigate to="/login" />;
+	}
+
+	return <Component {...rest} />;
+};
 
 export default PrivateRoute;

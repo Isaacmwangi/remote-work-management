@@ -92,8 +92,8 @@ const JobListings = () => {
         <ol>
           {filteredJobs.map((job) => (
             <li key={job.id}>
-              <Link to={`/joblistings/${job.id}`} className="job-link">
-                <div className="job-card">
+              <div className="job-card">
+                <Link to={`/joblistings/${job.id}`} className="job-link">
                   <h3>{job.title}</h3>
                   <h3>{job.employer?.company}</h3>
                   <p>{job.description}</p>
@@ -103,14 +103,14 @@ const JobListings = () => {
                   <p>
                     <strong>By:</strong> {job.employer?.username || "Unknown"}
                   </p>
-                  <Link
-                    to={`/joblistings/${job.id}`}
-                    className="view-details-link"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </Link>
+                </Link>
+                <Link
+                  to={`/joblistings/${job.id}`}
+                  className="view-details-link"
+                >
+                  View Details
+                </Link>
+              </div>
             </li>
           ))}
         </ol>

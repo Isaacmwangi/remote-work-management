@@ -1,0 +1,61 @@
+.task-list-container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-list-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.add-task-button {
+    background: #007bff;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.task-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.task-list-table th,
+.task-list-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.task-list-table th {
+    background-color: #f4f4f4;
+}
+
+.button.view-button {
+    background: #17a2b8;
+}
+
+.button.edit-button {
+    background: #ffc107;
+}
+
+.button.delete-button {
+    background: #dc3545;
+}
+
+.button.icon {
+    margin-right: 5px;
+}

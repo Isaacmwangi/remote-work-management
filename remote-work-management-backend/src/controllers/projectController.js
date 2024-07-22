@@ -10,6 +10,14 @@ const createProject = async (req, res) => {
         name,
         description,
         status
+      },
+      include: {
+        team: true,
+        tasks: {
+          include: {
+            assignedUser: true
+          }
+        }
       }
     });
 
@@ -21,7 +29,16 @@ const createProject = async (req, res) => {
 
 const getProjects = async (req, res) => {
   try {
-    const projects = await prisma.project.findMany();
+    const projects = await prisma.project.findMany({
+      include: {
+        team: true,
+        tasks: {
+          include: {
+            assignedUser: true
+          }
+        }
+      }
+    });
     res.json(projects);
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving projects' });
@@ -34,6 +51,14 @@ const getProjectById = async (req, res) => {
   try {
     const project = await prisma.project.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        team: true,
+        tasks: {
+          include: {
+            assignedUser: true
+          }
+        }
+      }
     });
 
     if (!project) {
@@ -53,7 +78,15 @@ const updateProject = async (req, res) => {
   try {
     const project = await prisma.project.update({
       where: { id: parseInt(id) },
-      data: { name, description, status }
+      data: { name, description, status },
+      include: {
+        team: true,
+        tasks: {
+          include: {
+            assignedUser: true
+          }
+        }
+      }
     });
 
     res.json(project);
@@ -72,7 +105,7 @@ const deleteProject = async (req, res) => {
 
     res.json({ message: 'Project deleted successfully' });
   } catch (error) {
-    res.status500().json({ error: 'Error deleting project' });
+    res.status(500).json({ error: 'Error deleting project' });
   }
 };
 

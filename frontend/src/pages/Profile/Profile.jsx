@@ -183,6 +183,7 @@ const Profile = () => {
             >
               <option value="JOB_SEEKER">Job Seeker</option>
               <option value="EMPLOYER">Employer</option>
+              {/* <option value="ADMIN">Admin</option> */}
             </select>
             <label>Company:</label>
             <input
@@ -207,7 +208,7 @@ const Profile = () => {
             <p><i className="fas fa-globe"></i> <b>Country:</b> {user.country}</p>
             <p><i className="fas fa-map-marker-alt"></i> <b>Location:</b> {user.location}</p>
             <p><i className="fas fa-home"></i> <b>Address:</b> {user.address}</p>
-            <p><i className="fas fa-briefcase"></i> <b>Role:</b> {user.role === "JOB_SEEKER" ? "Job Seeker" : "Employer"}</p>
+            <p><i className="fas fa-briefcase"></i> <b>Role:</b> {user.role}</p>
             {user.company && (
               <p><i className="fas fa-building"></i> <b>Company:</b> {user.company}</p>
             )}

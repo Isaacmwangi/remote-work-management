@@ -10,6 +10,11 @@ const createTeam = async (req, res) => {
         name,
         description,
         employer_id: employerId
+      },
+      include: {
+        employer: true,
+        projects: true,
+        messages: true
       }
     });
 
@@ -21,7 +26,13 @@ const createTeam = async (req, res) => {
 
 const getTeams = async (req, res) => {
   try {
-    const teams = await prisma.team.findMany();
+    const teams = await prisma.team.findMany({
+      include: {
+        employer: true,
+        projects: true,
+        messages: true
+      }
+    });
     res.json(teams);
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving teams' });
@@ -34,6 +45,11 @@ const getTeamById = async (req, res) => {
   try {
     const team = await prisma.team.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        employer: true,
+        projects: true,
+        messages: true
+      }
     });
 
     if (!team) {
@@ -53,7 +69,12 @@ const updateTeam = async (req, res) => {
   try {
     const team = await prisma.team.update({
       where: { id: parseInt(id) },
-      data: { name, description }
+      data: { name, description },
+      include: {
+        employer: true,
+        projects: true,
+        messages: true
+      }
     });
 
     res.json(team);

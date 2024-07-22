@@ -12,18 +12,29 @@ const createTask = async (req, res) => {
         description,
         status,
         due_date: new Date(due_date)
+      },
+      include: {
+        project: true,
+        assignedUser: true,
       }
     });
 
     res.status(201).json(task);
   } catch (error) {
-    res.status(500).json({ error: 'Error creating task' });
+    console.error('Error creating task:', error); // Log error for debugging
+    res.status(500).json({ error: 'Error creating task', details: error.message });
   }
 };
 
+
 const getTasks = async (req, res) => {
   try {
-    const tasks = await prisma.task.findMany();
+    const tasks = await prisma.task.findMany({
+      include: {
+        project: true,
+        assignedUser: true,
+      }
+    });
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ error: 'Error retrieving tasks' });
@@ -36,6 +47,10 @@ const getTaskById = async (req, res) => {
   try {
     const task = await prisma.task.findUnique({
       where: { id: parseInt(id) },
+      include: {
+        project: true,
+        assignedUser: true,
+      }
     });
 
     if (!task) {
@@ -55,7 +70,11 @@ const updateTask = async (req, res) => {
   try {
     const task = await prisma.task.update({
       where: { id: parseInt(id) },
-      data: { title, description, status, due_date: new Date(due_date) }
+      data: { title, description, status, due_date: new Date(due_date) },
+      include: {
+        project: true,
+        assignedUser: true,
+      }
     });
 
     res.json(task);
