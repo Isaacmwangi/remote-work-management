@@ -1,0 +1,16 @@
+.applications-edit-container {
+	padding: 20px;
+}
+
+.applications-edit-container h2 {
+	margin-bottom: 20px;
+}
+
+.applications-edit-container form {
+	display: flex;
+	flex-direction: column;
+}
+
+.applications-edit-container div {
+	margin-bottom: 10px;
+}

@@ -21,6 +21,10 @@ import JobListings from "../components/JobListings/Job_Listing/JobListings.compo
 import AddJobListing from "../components/JobListings/Add_Job/AddJobListing.component";
 import EditJobListing from "../components/JobListings/Edit_Job/EditJobListing.component";
 import JobDetails from "../components/JobListings/Job_Details/JobListingDetails";
+import ApplicationsList from '../components/Applications/ApplicationsList/ApplicationsList';
+import ApplicationsDetails from '../components/Applications/ApplicationsDetails/ApplicationsDetails';
+import EditApplications from '../components/Applications/EditApplication/EditApplication';
+import ApplyApplicationPage from '../components/Applications/ApplyApplication/ApplyApplicationPage';
 import NotFound from "../components/Error/NotFound/NotFound";
 import PrivateRouteForEmployers from "../components/common/PrivateRouteForEmployers";
 import Projects from '../pages/Projects/Projects';
@@ -69,7 +73,11 @@ const AppRouter = () => {
 					<Route path="/joblistings/add" element={<PrivateRouteForEmployers element={AddJobListing} />} />
 					<Route path="/joblistings/edit/:id" element={<PrivateRouteForEmployers element={EditJobListing} />} />
 					<Route path="/joblistings/:id" element={<ProtectedRoute element={JobDetails} />} />
-					<Route path="/projects" element={<ProtectedRoute element={Projects} />} />
+          <Route path="/applications" element={<ApplicationsList />} />
+				<Route path="/applications/details/:id" element={<ApplicationsDetails />} />
+				<Route path="/applications/edit/:id" element={<EditApplications />} />
+				<Route path="/apply/:jobId" element={<ApplyApplicationPage />} />
+			     <Route path="/projects" element={<ProtectedRoute element={Projects} />} />
 					<Route path="/projects/add" element={<ProtectedRoute element={AddProject} />} />
 					<Route path="/projects/edit/:id" element={<ProtectedRoute element={EditProject} />} />
 					<Route path="/projects/:id" element={<ProtectedRoute element={ProjectDetails} />} />

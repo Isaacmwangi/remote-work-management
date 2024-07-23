@@ -137,31 +137,32 @@ const uploadResume = async (req, res) => {
   const userId = req.user.id;
 
   if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded" });
+      return res.status(400).json({ error: "No file uploaded" });
   }
 
   const resumePath = path.join("uploads", req.file.filename);
 
   try {
-    const user = await prisma.user.update({
-      where: { id: userId },
-      data: { resume: resumePath },
-      include: {
-        profiles: true,
-        jobListings: true,
-        applications: true,
-        teams: true,
-        tasks: true,
-        sentMessages: true,
-        notifications: true,
-      },
-    });
-    res.json({ message: "Resume uploaded successfully", user });
+      const user = await prisma.user.update({
+          where: { id: userId },
+          data: { resume: resumePath },
+          include: {
+              profiles: true,
+              jobListings: true,
+              applications: true,
+              teams: true,
+              tasks: true,
+              sentMessages: true,
+              notifications: true,
+          },
+      });
+      res.json({ message: "Resume uploaded successfully", user });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error uploading resume" });
+      console.error("Error uploading resume:", error);
+      res.status(500).json({ error: "Error uploading resume" });
   }
 };
+
 
 // Delete user resume
 const deleteResume = async (req, res) => {

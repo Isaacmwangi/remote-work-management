@@ -72,6 +72,10 @@ const JobListingDetails = () => {
     return <div className="not-found">Job listing not found</div>;
   }
 
+  const handleApply = () => {
+    navigate(`/apply/${jobListing.id}`);
+  };
+
   return (
     <div className="job-listing-details">
       <h1 className="job-title">{jobListing.title}</h1>
@@ -90,18 +94,19 @@ const JobListingDetails = () => {
         <i className="fas fa-envelope"></i> <strong>Contact Email:</strong> 
         <a href={`mailto:${jobListing.employer.email}`}> {jobListing.employer.email || "Email not available"}</a>
       </p>
-      {currentUser &&
-        (currentUser.id === jobListing.employer.id ||
-          currentUser.role === "ADMIN") && (
-          <div className="actions">
-            <button onClick={handleEdit} className="btn btn-primary">
-       Edit
-            </button>
-            <button onClick={handleDelete} className="btn btn-danger">
-              Delete
-            </button>
-          </div>
-        )}
+      {currentUser && (
+        <>
+          {currentUser.id === jobListing.employer.id || currentUser.role === "ADMIN" ? (
+            <div className="actions">
+              <button onClick={handleEdit} className="btn btn-primary">Edit</button>
+              <button onClick={handleDelete} className="btn btn-danger">Delete</button>
+            </div>
+          ) : null}
+          {currentUser.role === "JOB_SEEKER" && (
+            <button onClick={handleApply}>Apply</button>
+          )}
+        </>
+      )}
     </div>
   );
 };

@@ -1,238 +1,164 @@
+/* Profile.css */
 .profile-container {
-  padding: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-out;
-  font-family: Arial, sans-serif;
+	padding: 20px;
+	font-family: Arial, sans-serif;
+	background: linear-gradient(135deg, #e0eafc, #cfdef3);
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header */
 .profile-header {
-  text-align: center;
-  margin-bottom: 20px;
+	text-align: center;
+	margin-bottom: 20px;
+	color: #333;
 }
 
 .profile-header h1 {
-  font-size: 2rem;
-  color: #333;
+	font-size: 2.5em;
+	color: #333;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
-/* Profile Information */
-.profile-info-section {
-  margin-bottom: 30px;
+.profile-header i {
+	margin-right: 10px;
+	color: #007bff;
 }
 
-.profile-info-section .profile-info,
-.profile-info-section .profile-form {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.profile-info-section,
+.resume-section,
+.activity-section {
+	margin-bottom: 30px;
+	background: #fff;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease-in-out;
 }
 
-.profile-info-section .profile-info p,
-.profile-info-section .profile-form label {
-  margin: 10px 0;
-  font-size: 1rem;
-  color: #555;
+.profile-info-section:hover,
+.resume-section:hover,
+.activity-section:hover {
+	transform: translateY(-10px);
 }
 
-.profile-info-section .profile-form input,
-.profile-info-section .profile-form select {
-  width: calc(100% - 16px);
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+.profile-form input,
+.profile-form select,
+.profile-info p {
+	font-size: 1.1em;
+	padding: 10px;
+	margin: 10px 0;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 100%;
 }
 
-.profile-info-section .profile-form button {
-  margin-right: 10px;
-}
-
-.profile-info-section .profile-form button:hover {
-  opacity: 0.8;
-}
-
-.profile-info-section .profile-info p i {
-  color: #007bff;
-  margin-right: 8px;
-}
-
-/* Resume Section */
-.resume-section {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.resume-section h2 {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.resume-upload input[type="file"] {
-  margin-top: 10px;
-}
-
-.resume-actions button {
-  margin-right: 10px;
-}
-
-.upload-status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.upload-status p {
-  margin: 0;
-}
-
-/* Details Section */
-.details-section {
-  margin-bottom: 30px;
-}
-
-.details-section h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.details-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-.details-category {
-  flex: 1;
-  min-width: 250px;
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.details-category h3 {
-  margin-top: 0;
-  font-size: 1.2rem;
-  color: #007bff;
-}
-
-.details-category ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.details-category ul li {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 4px;
-  background-color: #f1f1f1;
-  font-size: 0.9rem;
-}
-
-.details-category ul li a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-.details-category ul li a:hover {
-  text-decoration: underline;
-}
-
-/* Buttons */
+.profile-form button,
 .btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 10px 5px;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: #ffffff;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: #ffffff;
-}
-
-.btn-success {
-  background-color: #28a745;
-  color: #ffffff;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: #ffffff;
-}
-
-.btn-warning {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-.btn-info {
-  background-color: #17a2b8;
-  color: #ffffff;
-}
-
-.btn:hover {
-  opacity: 0.9;
-}
-
-/* Button Hover and Disabled States */
-.btn:hover {
-  opacity: 0.9;
+	background-color: #007bff;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3;
+	background-color: #0056b3;
+}
+
+.btn-secondary {
+	background-color: #6c757d;
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268;
+	background-color: #5a6268;
+}
+
+.btn-success {
+	background-color: #28a745;
 }
 
 .btn-success:hover {
-  background-color: #218838;
+	background-color: #218838;
+}
+
+.btn-danger {
+	background-color: #dc3545;
 }
 
 .btn-danger:hover {
-  background-color: #c82333;
+	background-color: #c82333;
+}
+
+.btn-warning {
+	background-color: #ffc107;
 }
 
 .btn-warning:hover {
-  background-color: #e0a800;
+	background-color: #e0a800;
 }
 
-.btn-info:hover {
-  background-color: #117a8b;
+.resume-upload input[type="file"] {
+	display: none;
 }
 
-.btn:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
+.resume-upload label {
+	background-color: #007bff;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+.resume-upload label:hover {
+	background-color: #0056b3;
+}
+
+.resume-actions {
+	display: flex;
+	gap: 10px;
+}
+
+.activity-list {
+	list-style: none;
+	padding: 0;
+}
+
+.activity-list li {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+	display: flex;
+	align-items: center;
+}
+
+.activity-list li:hover {
+	background-color: #f1f1f1;
+}
+
+.activity-list li i {
+	margin-right: 10px;
+	color: #007bff;
+}
+
+h2 {
+	color: #333;
+	display: flex;
+	align-items: center;
+}
+
+h2 i {
+	margin-right: 10px;
+	color: #007bff;
 }

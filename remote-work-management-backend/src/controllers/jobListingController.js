@@ -39,12 +39,21 @@ const getJobListings = async (req, res) => {
 const getJobListingById = async (req, res) => {
   const { id } = req.params;
 
+  if (!id) {
+    return res.status(400).json({ error: "Job listing ID is required" });
+  }
+
   try {
     const jobListing = await prisma.jobListing.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(id, 10) },
       include: {
         employer: {
-          select: { id: true, username: true, email: true, company: true },
+          select: {
+            id: true,
+            username: true,
+            email: true,
+            company: true,
+          },
         },
       },
     });
@@ -53,13 +62,13 @@ const getJobListingById = async (req, res) => {
       return res.status(404).json({ message: "Job listing not found" });
     }
 
-    console.log("Job Listing:", jobListing);
     res.json(jobListing);
   } catch (error) {
     console.error("Error retrieving job listing:", error);
     res.status(500).json({ error: "Error retrieving job listing" });
   }
 };
+
 
 const updateJobListing = async (req, res) => {
   const { id } = req.params;

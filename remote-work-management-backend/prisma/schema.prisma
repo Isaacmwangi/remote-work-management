@@ -1,5 +1,3 @@
-// schema.prisma
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -74,7 +72,8 @@ model Application {
   job_id        Int
   job_seeker_id Int
   status        String
-  applied_on    DateTime
+  applied_on    DateTime       @default(now())
+  resume        String?       
   jobListing    JobListing     @relation(fields: [job_id], references: [id])
   jobSeeker     User           @relation(fields: [job_seeker_id], references: [id])
   notifications Notification[]
