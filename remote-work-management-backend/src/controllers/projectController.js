@@ -1,111 +1,171 @@
 const { prisma } = require('../config/db');
 
+// Create a project
 const createProject = async (req, res) => {
-  const { team_id, name, description, status } = req.body;
+  const { name, description, teamId, assignedUserIds } = req.body;
 
   try {
+    if (!Array.isArray(assignedUserIds) || assignedUserIds.length === 0) {
+      return res.status(400).json({ error: 'Invalid assignedUserIds' });
+    }
+
     const project = await prisma.project.create({
       data: {
-        team_id,
         name,
         description,
-        status
+        team: teamId ? { connect: { id: teamId } } : undefined,
+        tasks: {
+          create: assignedUserIds.map(userId => ({
+            assigned_to: userId,
+            title: 'New Task',
+            description: 'Task description',
+            status: 'open',
+            due_date: new Date(),
+          })),
+        },
+        status: 'In Progress'
       },
       include: {
-        team: true,
+        team: {
+          include: {
+            members: true,
+          },
+        },
         tasks: {
           include: {
-            assignedUser: true
-          }
-        }
-      }
+            assignedUser: true,
+          },
+        },
+      },
     });
-
     res.status(201).json(project);
   } catch (error) {
-    res.status(500).json({ error: 'Error creating project' });
+    console.error('Error creating project:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
+// Get all projects
 const getProjects = async (req, res) => {
   try {
     const projects = await prisma.project.findMany({
       include: {
-        team: true,
+        team: {
+          include: {
+            members: true,
+          },
+        },
         tasks: {
           include: {
-            assignedUser: true
-          }
-        }
-      }
+            assignedUser: true,
+          },
+        },
+      },
     });
-    res.json(projects);
+    res.status(200).json(projects);
   } catch (error) {
-    res.status(500).json({ error: 'Error retrieving projects' });
+    console.error('Error fetching projects:', error);
+    res.status(500).json({ error: 'An error occurred while fetching projects' });
   }
 };
 
+// Get a single project by ID
 const getProjectById = async (req, res) => {
   const { id } = req.params;
-
+  
   try {
     const project = await prisma.project.findUnique({
       where: { id: parseInt(id) },
       include: {
-        team: true,
+        team: {
+          include: {
+            members: true,
+          },
+        },
         tasks: {
           include: {
-            assignedUser: true
-          }
-        }
-      }
+            assignedUser: true,
+          },
+        },
+      },
     });
-
+    
     if (!project) {
-      return res.status(404).json({ message: 'Project not found' });
+      return res.status(404).json({ error: 'Project not found' });
     }
-
-    res.json(project);
+    
+    res.status(200).json(project);
   } catch (error) {
-    res.status(500).json({ error: 'Error retrieving project' });
+    console.error('Error fetching project details:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
+// Update a project
 const updateProject = async (req, res) => {
   const { id } = req.params;
-  const { name, description, status } = req.body;
+  const { name, description, teamId } = req.body;
 
   try {
     const project = await prisma.project.update({
-      where: { id: parseInt(id) },
-      data: { name, description, status },
+      where: { id: parseInt(id, 10) },
+      data: {
+        name,
+        description,
+        team: teamId ? { connect: { id: teamId } } : undefined,
+      },
       include: {
-        team: true,
+        team: {
+          include: {
+            members: true,
+          },
+        },
         tasks: {
           include: {
-            assignedUser: true
-          }
-        }
-      }
+            assignedUser: true,
+          },
+        },
+      },
     });
-
-    res.json(project);
+    res.status(200).json(project);
   } catch (error) {
-    res.status(500).json({ error: 'Error updating project' });
+    console.error('Error updating project:', error);
+    res.status(500).json({ error: 'An error occurred while updating the project' });
   }
 };
 
+// Delete a project
 const deleteProject = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await prisma.project.delete({
-      where: { id: parseInt(id) }
+    // Ensure the project exists before attempting to delete
+    const projectExists = await prisma.project.findUnique({
+      where: { id: parseInt(id, 10) },
     });
 
-    res.json({ message: 'Project deleted successfully' });
+    if (!projectExists) {
+      console.warn(`Attempted to delete project with ID ${id} but it does not exist.`);
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // Delete related tasks
+    const deletedTasks = await prisma.task.deleteMany({
+      where: { project_id: parseInt(id, 10) },
+    });
+
+    console.log(`Deleted ${deletedTasks.count} tasks associated with project ID ${id}.`);
+
+    // Delete the project
+    await prisma.project.delete({
+      where: { id: parseInt(id, 10) },
+    });
+
+    console.log(`Successfully deleted project with ID ${id}.`);
+    res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: 'Error deleting project' });
+    console.error(`Error deleting project with ID ${id}:`, error);
+    res.status(500).json({ error: 'An error occurred while deleting the project' });
   }
 };
 

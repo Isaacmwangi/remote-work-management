@@ -1,32 +1,132 @@
+.project-details-container {
+	margin: 20px auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+	max-width: 800px;
+	animation: fadeIn 0.5s ease-in-out;
+	position: relative;
+}
+
+.title {
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 1.5em;
+	color: #333;
+}
+
+.back-button {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	padding: 10px 15px;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: white;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	transition: background-color 0.3s ease;
+}
+
+.back-button i {
+	margin-right: 5px;
+}
+
+.back-button:hover {
+	background-color: #0056b3;
+}
+
 .project-details {
-    padding: 20px;
-  }
-  
-  .edit-button,
-  .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    border-radius: 5px;
-  }
-  
-  .edit-button {
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .edit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .back-button {
-    background-color: #6c757d;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .back-button:hover {
-    background-color: #5a6268;
-  }
-  
+	display: flex;
+	flex-direction: column;
+}
+
+.detail {
+	margin-bottom: 20px;
+	animation: slideIn 0.5s ease-in-out;
+}
+
+.detail h3 {
+	margin-bottom: 10px;
+	color: #555;
+}
+
+.detail p,
+.detail ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	color: #333;
+}
+
+.detail ul {
+	padding-left: 20px;
+}
+
+.actions {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.actions .btn {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.actions .btn-warning {
+	background-color: #f0ad4e;
+}
+
+.actions .btn-warning:hover {
+	background-color: #ec971f;
+}
+
+.actions .btn-danger {
+	background-color: #d9534f;
+}
+
+.actions .btn-danger:hover {
+	background-color: #c9302c;
+}
+
+.actions .btn i {
+	margin-right: 5px;
+}
+
+.loading,
+.not-found {
+	text-align: center;
+	margin-top: 20px;
+	color: #333;
+	font-size: 1.2em;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}

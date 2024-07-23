@@ -1,18 +1,29 @@
-.project-list {
-    padding: 20px;
-  }
-  
-  .add-button {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-  }
-  
-  .add-button:hover {
-    background-color: #0056b3;
-  }
-  
+.project-list-container {
+  padding: 20px;
+}
+
+.project-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.project-list-table th,
+.project-list-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.project-list-table th {
+  background-color: #f4f4f4;
+  text-align: left;
+}
+
+.view-button {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.view-button:hover {
+  text-decoration: underline;
+}

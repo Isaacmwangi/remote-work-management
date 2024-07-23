@@ -80,6 +80,18 @@ model Application {
   notifications Notification[]
 }
 
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  status      String   @default("In Progress")
+  team_id     Int
+  team        Team     @relation(fields: [team_id], references: [id])
+  tasks       Task[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Team {
   id          Int       @id @default(autoincrement())
   employer_id Int
@@ -93,23 +105,13 @@ model Team {
   members     User[]    @relation("TeamMembers")
 }
 
-model Project {
-  id          Int    @id @default(autoincrement())
-  team_id     Int
-  name        String
-  description String
-  status      String
-  team        Team   @relation(fields: [team_id], references: [id])
-  tasks       Task[]
-}
-
 model Task {
   id           Int      @id @default(autoincrement())
   project_id   Int
   assigned_to  Int
   title        String
   description  String
-  status       String   @default("open")
+  status       String   @default("Pending")
   due_date     DateTime
   project      Project  @relation(fields: [project_id], references: [id])
   assignedUser User     @relation(fields: [assigned_to], references: [id])

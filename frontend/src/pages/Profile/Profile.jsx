@@ -117,6 +117,30 @@ const Profile = () => {
     navigate(`/joblistings/${jobId}`);
   };
 
+  const handleApplicationClick = (applicationId) => {
+    navigate(`/applications/${applicationId}`);
+  };
+
+  const handleInterviewClick = (interviewId) => {
+    navigate(`/interviews/${interviewId}`);
+  };
+
+  const handleTeamClick = (teamId) => {
+    navigate(`/teams/${teamId}`);
+  };
+
+  const handleTaskClick = (taskId) => {
+    navigate(`/tasks/${taskId}`);
+  };
+
+  const handleSentMessageClick = (messageId) => {
+    navigate(`/messages/sent/${messageId}`);
+  };
+
+  const handleReceivedMessageClick = (messageId) => {
+    navigate(`/messages/received/${messageId}`);
+  };
+
   return (
     <div className="profile-container">
       <header className="profile-header">
@@ -285,7 +309,14 @@ const Profile = () => {
             <h3><i className="fas fa-file-alt"></i> Applications</h3>
             <ul>
               {user.applications?.map((app) => (
-                <li key={app.id}>{app.jobListing.title}</li>
+                <li key={app.id}>
+                  <button
+                    onClick={() => handleApplicationClick(app.id)}
+                    className="btn btn-link"
+                  >
+                    {app.jobListing.title}
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
@@ -295,7 +326,12 @@ const Profile = () => {
             <ul>
               {user.interviews?.map((interview) => (
                 <li key={interview.id}>
-                  {interview.title} on {new Date(interview.date).toLocaleDateString()}
+                  <button
+                    onClick={() => handleInterviewClick(interview.id)}
+                    className="btn btn-link"
+                  >
+                    {interview.title} on {new Date(interview.date).toLocaleDateString()}
+                  </button>
                 </li>
               ))}
             </ul>
@@ -305,7 +341,14 @@ const Profile = () => {
             <h3><i className="fas fa-users"></i> Teams</h3>
             <ul>
               {user.teams?.map((team) => (
-                <li key={team.id}>{team.name}</li>
+                <li key={team.id}>
+                  <button
+                    onClick={() => handleTeamClick(team.id)}
+                    className="btn btn-link"
+                  >
+                    {team.name}
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
@@ -314,7 +357,14 @@ const Profile = () => {
             <h3><i className="fas fa-tasks"></i> Tasks</h3>
             <ul>
               {user.tasks?.map((task) => (
-                <li key={task.id}>{task.title}</li>
+                <li key={task.id}>
+                  <button
+                    onClick={() => handleTaskClick(task.id)}
+                    className="btn btn-link"
+                  >
+                    {task.title}
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
@@ -323,7 +373,14 @@ const Profile = () => {
             <h3><i className="fas fa-paper-plane"></i> Sent Messages</h3>
             <ul>
               {user.sentMessages?.map((msg) => (
-                <li key={msg.id}>{msg.content}</li>
+                <li key={msg.id}>
+                  <button
+                    onClick={() => handleSentMessageClick(msg.id)}
+                    className="btn btn-link"
+                  >
+                    {msg.content}
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
@@ -332,7 +389,14 @@ const Profile = () => {
             <h3><i className="fas fa-inbox"></i> Received Messages</h3>
             <ul>
               {user.receivedMessages?.map((msg) => (
-                <li key={msg.id}>{msg.content}</li>
+                <li key={msg.id}>
+                  <button
+                    onClick={() => handleReceivedMessageClick(msg.id)}
+                    className="btn btn-link"
+                  >
+                    {msg.content}
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
