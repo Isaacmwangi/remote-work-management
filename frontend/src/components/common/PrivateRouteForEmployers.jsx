@@ -1,3 +1,5 @@
+// src/components/common/PrivateRouteForEmployers.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -22,7 +24,7 @@ const PrivateRouteForEmployers = ({ element: Component, ...rest }) => {
           const role = response.data.role;
           setIsEmployer(role === 'EMPLOYER' || role === 'ADMIN');
           if (!(role === 'EMPLOYER' || role === 'ADMIN') && !toastDisplayed.current) {
-            toast.error('You need to be an employer to post a job. Please update your profile.');
+            toast.error('You need to be an employer to access this page.');
             toastDisplayed.current = true;
           }
           setLoading(false);

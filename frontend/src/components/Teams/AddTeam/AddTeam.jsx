@@ -1,3 +1,5 @@
+// src/components/Teams/AddTeam/AddTeam.jsx
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,6 +15,7 @@ const AddTeam = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,8 +34,30 @@ const AddTeam = () => {
       }
     };
 
+    const checkAuthorization = async () => {
+      try {
+        const response = await axios.get("/api/profile", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        const role = response.data.role;
+        if (role === 'EMPLOYER' || role === 'ADMIN') {
+          setIsAuthorized(true);
+        } else {
+          toast.error("You do not have permission to add a team.");
+          navigate("/profile");
+        }
+      } catch (error) {
+        console.error('Error checking authorization:', error);
+        toast.error("Failed to check authorization");
+        navigate("/profile");
+      }
+    };
+
     fetchUsers();
-  }, []);
+    checkAuthorization();
+  }, [navigate]);
 
   useEffect(() => {
     if (searchTerm.trim() === "") {
@@ -51,37 +76,35 @@ const AddTeam = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('No authentication token found');
       }
-
+  
       const response = await axios.post("/api/teams", { name, description }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       const teamId = response.data.id;
       
-      // Add selected members to the team
-      await Promise.all(selectedMembers.map(userId =>
-        axios.post("/api/teams/add-member", { teamId, userId }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-      ));
-
-      toast.success("Team added successfully!");
-      navigate("/teams");
+      await axios.post("/api/teams/add-member", { teamId, userId: response.data.employer_id }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      toast.success("Team created successfully");
+      navigate("/teams"); 
     } catch (error) {
-      console.error('Error adding team:', error);
-      toast.error("Failed to add team");
+      console.error('Error creating team:', error);
+      toast.error("Failed to create team");
     }
   };
+  
 
   const handleMemberChange = (userId) => {
     if (!selectedMembers.includes(userId)) {
@@ -103,7 +126,7 @@ const AddTeam = () => {
     setIsDropdownOpen(false);
   };
 
-  return (
+  return isAuthorized ? (
     <div className="add-team-container">
       <h2><i className="fas fa-plus-circle"></i> Add Team</h2>
       <form onSubmit={handleSubmit} className="add-team-form">
@@ -180,7 +203,7 @@ const AddTeam = () => {
         </button>
       </form>
     </div>
-  );
+  ) : null;
 };
 
 export default AddTeam;

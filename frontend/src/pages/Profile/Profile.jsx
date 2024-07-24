@@ -209,7 +209,7 @@ const Profile = () => {
 						>
 							<option value="JOB_SEEKER">Job Seeker</option>
 							<option value="EMPLOYER">Employer</option>
-							{/* <option value="ADMIN">Admin</option> */}
+							<option value="ADMIN">Admin</option>
 						</select>
 						<label>Company:</label>
 						<input

@@ -67,34 +67,34 @@ const AppRouter = () => {
           <Route path="/dashboard" element={<ProtectedRoute element={Dashboard} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
-					<Route path="/profile" element={<ProtectedRoute element={Profile} />} />
-					<Route path="/resume" element={<ProtectedRoute element={ResumePage} />} />
-					<Route path="/joblistings" element={<ProtectedRoute element={JobListings} />} />
-					<Route path="/joblistings/add" element={<PrivateRouteForEmployers element={AddJobListing} />} />
-					<Route path="/joblistings/edit/:id" element={<PrivateRouteForEmployers element={EditJobListing} />} />
-					<Route path="/joblistings/:id" element={<ProtectedRoute element={JobDetails} />} />
+          <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
+          <Route path="/resume" element={<ProtectedRoute element={ResumePage} />} />
+          <Route path="/joblistings" element={<ProtectedRoute element={JobListings} />} />
+          <Route path="/joblistings/add" element={<PrivateRouteForEmployers element={AddJobListing} />} />
+          <Route path="/joblistings/edit/:id" element={<PrivateRouteForEmployers element={EditJobListing} />} />
+          <Route path="/joblistings/:id" element={<ProtectedRoute element={JobDetails} />} />
           <Route path="/applications" element={<ApplicationsList />} />
-				  <Route path="/applications/details/:id" element={<ApplicationsDetails />} />
-				  <Route path="/applications/edit/:id" element={<EditApplications />} />
-			  	<Route path="/apply/:jobId" element={<ApplyApplicationPage />} />
-			    <Route path="/projects" element={<ProtectedRoute element={Projects} />} />
-					<Route path="/projects/add" element={<ProtectedRoute element={AddProject} />} />
-					<Route path="/projects/edit/:id" element={<ProtectedRoute element={EditProject} />} />
-					<Route path="/projects/:id" element={<ProtectedRoute element={ProjectDetails} />} />
-					<Route path="/tasks" element={<ProtectedRoute element={Tasks} />} />
-					<Route path="/tasks/add" element={<ProtectedRoute element={AddTask} />} />
-					<Route path="/tasks/edit/:id" element={<ProtectedRoute element={EditTask} />} />
-					<Route path="/tasks/:id" element={<ProtectedRoute element={TaskDetails} />} />
-					<Route path="/completed-tasks" element={<ProtectedRoute element={CompletedTasks} />} />
-					<Route path="/teams" element={<ProtectedRoute element={Teams} />} />
-          <Route path="/teams/add" element={<ProtectedRoute element={AddTeam} />} />
-          <Route path="/teams/edit/:id" element={<ProtectedRoute element={EditTeam} />} />
+          <Route path="/applications/details/:id" element={<ApplicationsDetails />} />
+          <Route path="/applications/edit/:id" element={<EditApplications />} />
+          <Route path="/apply/:jobId" element={<ApplyApplicationPage />} />
+          <Route path="/projects" element={<ProtectedRoute element={Projects} />} />
+          <Route path="/projects/add" element={<ProtectedRoute element={AddProject} />} />
+          <Route path="/projects/edit/:id" element={<ProtectedRoute element={EditProject} />} />
+          <Route path="/projects/:id" element={<ProtectedRoute element={ProjectDetails} />} />
+          <Route path="/tasks" element={<ProtectedRoute element={Tasks} />} />
+          <Route path="/tasks/add" element={<ProtectedRoute element={AddTask} />} />
+          <Route path="/tasks/edit/:id" element={<ProtectedRoute element={EditTask} />} />
+          <Route path="/tasks/:id" element={<ProtectedRoute element={TaskDetails} />} />
+          <Route path="/completed-tasks" element={<ProtectedRoute element={CompletedTasks} />} />
+          <Route path="/teams" element={<ProtectedRoute element={Teams} />} />
+          <Route path="/teams/add" element={<PrivateRouteForEmployers element={AddTeam} />} />
+          <Route path="/teams/edit/:id" element={<PrivateRouteForEmployers element={EditTeam} />} />
           <Route path="/teams/:id" element={<ProtectedRoute element={TeamDetails} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-			</Layout>
-		</Router>
-	);
+      </Layout>
+    </Router>
+  );
 };
 
 export default AppRouter;

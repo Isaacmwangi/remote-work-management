@@ -4,6 +4,7 @@ body {
   min-height: 100vh;
   margin: 0;
   padding-right: 10px;
+  width: 100%;
 }
 
 html, body {
@@ -16,6 +17,4 @@ main {
   width: 100%;
 }
 
-.App {
-  width: 100vw;
-}
+
