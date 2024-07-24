@@ -9,8 +9,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const Dashboard = () => {
   const [projectCount, setProjectCount] = useState(0);
-  const [teamMemberCount, setTeamMemberCount] = useState(0);
-  const [completedTasksCount, setCompletedTasksCount] = useState(0);
+  const [TeamCount, setTeamCount] = useState(0);
+  const [TasksCount, setTasksCount] = useState(0);
   const [jobCount, setJobCount] = useState(0);
 
   useEffect(() => {
@@ -24,8 +24,8 @@ const Dashboard = () => {
         ]);
 
         setProjectCount(projectsResponse.data.length);
-        setTeamMemberCount(teamResponse.data.length);
-        setCompletedTasksCount(completedTasksResponse.data.length);
+        setTeamCount(teamResponse.data.length);
+        setTasksCount(completedTasksResponse.data.length);
         setJobCount(jobsResponse.data.length);
       } catch (error) {
         console.error('Error fetching counts:', error.response ? error.response.data : error.message);
@@ -57,13 +57,13 @@ const Dashboard = () => {
         </div>
         <div className="stat-card">
           <i className="fas fa-users icon"></i>
-          <h2>Team Members</h2>
-          <p>{teamMemberCount} Active</p>
+          <h2>Available Teams</h2>
+          <p>{TeamCount} Active</p>
         </div>
         <div className="stat-card">
           <i className="fas fa-tasks icon"></i>
-          <h2>Tasks Completed</h2>
-          <p>{completedTasksCount} Tasks</p>
+          <h2> Available Tasks</h2>
+          <p>{TasksCount} Tasks</p>
         </div>
         <div className="stat-card">
           <i className="fas fa-briefcase icon"></i>

@@ -1,151 +1,188 @@
 .dashboard {
-  font-family: 'Arial', sans-serif;
-  padding: 20px;
-  background: linear-gradient(135deg, #e2e2e2, #ffffff);
-  animation: fadeIn 1.5s ease-out;
+	font-family: 'Arial', sans-serif;
+	padding: 20px;
+	background: linear-gradient(135deg, #e2e2e2, #ffffff);
+	animation: fadeIn 1.5s ease-out;
 }
 
 .dashboard-header {
-  text-align: center;
-  padding: 20px;
-  background: linear-gradient(to right, #ff7e5f, #feb47b);
-  color: white;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	padding: 20px;
+	background: linear-gradient(to right, #ff7e5f, #feb47b);
+	color: white;
+	border-radius: 12px;
+	margin-bottom: 20px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .dashboard-header h1 {
-  margin: 0;
-  font-size: 2.8rem;
-  animation: slideIn 1s ease-out;
+	margin: 0;
+	font-size: 2.8rem;
+	animation: slideIn 1s ease-out;
 }
 
 .dashboard-header p {
-  font-size: 1.4rem;
-  margin-top: 10px;
-  animation: slideIn 1s ease-out;
+	font-size: 1.4rem;
+	margin-top: 10px;
+	animation: slideIn 1s ease-out;
 }
 
 .dashboard-stats {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
 }
 
 .stat-card {
-  background: #ffffff;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  width: 23%;
-  min-width: 250px;
-  text-align: center;
-  transition: transform 0.3s ease-in-out;
-  animation: bounceIn 1s ease-out;
+	background: #ffffff;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 10px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	width: 23%;
+	min-width: 250px;
+	text-align: center;
+	transition: transform 0.3s ease-in-out;
+	animation: bounceIn 1s ease-out;
+	position: relative;
+	overflow: hidden;
 }
 
 .stat-card:hover {
-  transform: scale(1.05);
+	transform: scale(1.05);
 }
 
 .stat-card h2 {
-  font-size: 1.6rem;
-  margin-bottom: 10px;
+	font-size: 1.6rem;
+	margin-bottom: 10px;
 }
 
 .stat-card .icon {
-  font-size: 2rem;
-  color: #0072ff;
-  margin-bottom: 10px;
+	font-size: 2rem;
+	color: #0072ff;
+	margin-bottom: 10px;
+}
+
+.stat-card::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.1);
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.stat-card:hover::after {
+	opacity: 1;
 }
 
 .dashboard-actions {
-  text-align: center;
-  padding: 20px;
-  background: #f1f1f1;
-  border-radius: 10px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1.5s ease-out;
+	text-align: center;
+	padding: 20px;
+	background: #f1f1f1;
+	border-radius: 10px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+	animation: fadeIn 1.5s ease-out;
 }
 
 .dashboard-actions h2 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
+	font-size: 2.2rem;
+	margin-bottom: 20px;
 }
 
 .action-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	flex-wrap: wrap;
 }
 
 .action-button {
-  background-color: #0072ff;
-  color: white;
-  padding: 15px 25px;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 1.3rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+	background-color: #0072ff;
+	color: white;
+	padding: 15px 25px;
+	text-decoration: none;
+	border-radius: 8px;
+	font-size: 1.3rem;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	position: relative;
+	overflow: hidden;
 }
 
 .action-button:hover {
-  background-color: #005bb5;
-  transform: scale(1.05);
+	background-color: #005bb5;
+	transform: scale(1.05);
+}
+
+.action-button::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 20%, transparent 20%);
+	background-size: 20px 20px;
+	transition: background 0.5s;
+}
+
+.action-button:hover::before {
+	background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 20%, transparent 20%);
 }
 
 .dashboard-content {
-  padding: 20px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  animation: fadeIn 1.5s ease-out;
+	padding: 20px;
+	background-color: white;
+	border-radius: 12px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+	margin-bottom: 20px;
+	animation: fadeIn 1.5s ease-out;
 }
 
 .dashboard-content h2 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
+	font-size: 2.2rem;
+	margin-bottom: 20px;
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+	from {
+		transform: translateY(-20px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
 }
 
 @keyframes bounceIn {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
+	0% {
+		transform: scale(0.8);
+		opacity: 0;
+	}
+	50% {
+		transform: scale(1.1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+	}
 }

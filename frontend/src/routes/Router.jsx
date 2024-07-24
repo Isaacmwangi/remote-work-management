@@ -74,10 +74,10 @@ const AppRouter = () => {
 					<Route path="/joblistings/edit/:id" element={<PrivateRouteForEmployers element={EditJobListing} />} />
 					<Route path="/joblistings/:id" element={<ProtectedRoute element={JobDetails} />} />
           <Route path="/applications" element={<ApplicationsList />} />
-				<Route path="/applications/details/:id" element={<ApplicationsDetails />} />
-				<Route path="/applications/edit/:id" element={<EditApplications />} />
-				<Route path="/apply/:jobId" element={<ApplyApplicationPage />} />
-			     <Route path="/projects" element={<ProtectedRoute element={Projects} />} />
+				  <Route path="/applications/details/:id" element={<ApplicationsDetails />} />
+				  <Route path="/applications/edit/:id" element={<EditApplications />} />
+			  	<Route path="/apply/:jobId" element={<ApplyApplicationPage />} />
+			    <Route path="/projects" element={<ProtectedRoute element={Projects} />} />
 					<Route path="/projects/add" element={<ProtectedRoute element={AddProject} />} />
 					<Route path="/projects/edit/:id" element={<ProtectedRoute element={EditProject} />} />
 					<Route path="/projects/:id" element={<ProtectedRoute element={ProjectDetails} />} />
