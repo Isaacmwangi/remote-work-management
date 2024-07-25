@@ -26,6 +26,7 @@ model User {
   resume          String?
   address         String?
   company         String?
+  avatar          String?
   profiles        Profile[]
   jobListings     JobListing[]
   applications    Application[]
