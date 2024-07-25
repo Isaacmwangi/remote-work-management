@@ -21,12 +21,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: 'frontend', 
+    outDir: 'build', 
   },
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://remoteworkmanagement.onrender.com',
         changeOrigin: true,
         secure: false,
       },
