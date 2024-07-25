@@ -1,15 +1,32 @@
+// // vite.config.js
+// import { defineConfig } from 'vite';
+// import react from '@vitejs/plugin-react';
+
+// export default defineConfig({
+//   plugins: [react()],
+//   server: {
+//     proxy: {
+//       '/api': {
+//         target: 'http://localhost:3000',
+//         changeOrigin: true,
+//         secure: false,
+//       },
+//     },
+//   },
+// });
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: '../frontend/build', // Make sure this path is correct
+    outDir: '../frontend/build', 
   },
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://remoteworkmanagement.onrender.com',
         changeOrigin: true,
         secure: false,
       },
