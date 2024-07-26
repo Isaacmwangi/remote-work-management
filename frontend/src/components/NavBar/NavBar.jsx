@@ -5,11 +5,12 @@ import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa"; // Import an icon for user avatar
+import defaultAvatar from "../../assets/avatar.png"; 
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useAuth();
   const [username, setUsername] = React.useState("");
-  const [avatar, setAvatar] = React.useState(null); // State for storing avatar URL
+  const [avatar, setAvatar] = React.useState(defaultAvatar); 
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -23,7 +24,8 @@ const NavBar = () => {
           },
         });
         setUsername(response.data.username);
-        setAvatar(response.data.avatar || null);
+        // Update the avatar URL based on profile data
+        setAvatar(response.data.avatar ? `/api/profile/avatar/${response.data.id}` : defaultAvatar);
       } catch (error) {
         console.error("Error fetching profile:", error);
         toast.error("Failed to fetch profile");
@@ -40,13 +42,13 @@ const NavBar = () => {
   };
 
   const UserAvatar = () =>
-    avatar ? (
-      <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
-    ) : (
-      <FaUserCircle className="avatar-icon" />
-    );
+  avatar ? (
+    <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
+  ) : (
+    <FaUserCircle className="avatar-icon" />
+  );
 
-  return (
+return (
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/">Home</Link>

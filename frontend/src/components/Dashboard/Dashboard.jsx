@@ -15,14 +15,20 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchCounts = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("No token found. Please log in.");
+        return;
+      }
+  
       try {
         const [projectsResponse, teamResponse, completedTasksResponse, jobsResponse] = await Promise.all([
-          axios.get('/api/projects'),
-          axios.get('/api/teams'),
-          axios.get('/api/tasks'),
-          axios.get('/api/joblistings')
+          axios.get('/api/projects', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/teams', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/tasks', { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get('/api/joblistings', { headers: { Authorization: `Bearer ${token}` } })
         ]);
-
+  
         setProjectCount(projectsResponse.data.length);
         setTeamCount(teamResponse.data.length);
         setTasksCount(completedTasksResponse.data.length);
@@ -38,9 +44,10 @@ const Dashboard = () => {
         );
       }
     };
-
+  
     fetchCounts();
   }, []);
+  
 
   return (
     <div className="dashboard">
@@ -77,8 +84,8 @@ const Dashboard = () => {
         <div className="action-buttons">
           <Link to="/projects" className="action-button"><i className="fas fa-project-diagram"></i> View Projects</Link>
           <Link to="/tasks" className="action-button"><i className="fas fa-tasks"></i> View Tasks</Link>
-          <Link to="/teams" className="action-button"><i className="fas fa-users"></i> View Team Members</Link>
-          <Link to="/completed-tasks" className="action-button"><i className="fas fa-check-double"></i> View Completed Tasks</Link>
+          <Link to="/teams" className="action-button"><i className="fas fa-users"></i> View My Teams</Link>
+          <Link to="/completed-tasks" className="action-button"><i className="fas fa-check-double"></i> View My Tasks</Link>
           <Link to="/joblistings" className="action-button"><i className="fas fa-briefcase"></i> View Available Jobs</Link>
         </div>
       </section>

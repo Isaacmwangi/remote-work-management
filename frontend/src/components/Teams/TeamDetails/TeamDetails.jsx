@@ -120,10 +120,10 @@ const TeamDetails = () => {
             {team.members.map((member) => (
               <li key={member.id} className="member-item">
                 <img
-                  src={member.avatar ? member.avatar : defaultAvatar}
-                  alt={`${member.firstName} ${member.secondName}`}
-                  className="member-avatar"
-                />
+								src={member.avatar ? `/api/profile/avatar/${member.id}` : defaultAvatar}
+								alt={`${member.username}'s avatar`}
+								className="avatar-img"
+							/>
                 <div className="member-info">
                   <p>{member.firstName} {member.secondName}</p>
                   <p>{member.email}</p>
