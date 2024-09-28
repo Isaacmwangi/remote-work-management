@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { FaUserCircle } from "react-icons/fa"; // Import an icon for user avatar
-import defaultAvatar from "../../assets/avatar.png"; 
+import defaultAvatar from "../../assets/avatar.png";
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useAuth();
   const [username, setUsername] = React.useState("");
-  const [avatar, setAvatar] = React.useState(defaultAvatar); 
+  const [avatar, setAvatar] = React.useState(defaultAvatar);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -24,31 +24,32 @@ const NavBar = () => {
           },
         });
         setUsername(response.data.username);
-        // Update the avatar URL based on profile data
         setAvatar(response.data.avatar ? `/api/profile/avatar/${response.data.id}` : defaultAvatar);
       } catch (error) {
         console.error("Error fetching profile:", error);
-        toast.error("Failed to fetch profile");
+        toast.error("Failed to fetch profile. You will be logged out.");
+        logout(); // Automatically log out the user if fetching profile fails
+        navigate("/"); // Redirect to home page
       }
     };
 
     fetchProfile();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, logout, navigate]);
 
   const handleLogout = () => {
     logout();
     toast.success("Logged out successfully");
-    navigate("/login");
+    navigate("/"); // Redirect to home page after logout
   };
 
   const UserAvatar = () =>
-  avatar ? (
-    <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
-  ) : (
-    <FaUserCircle className="avatar-icon" />
-  );
+    avatar ? (
+      <img src={avatar} alt={`${username}'s avatar`} className="avatar" />
+    ) : (
+      <FaUserCircle className="avatar-icon" />
+    );
 
-return (
+  return (
     <nav className="navbar">
       <div className="navbar-left">
         <Link to="/">Home</Link>

@@ -121,11 +121,11 @@ const Profile = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      toast.success("Avatar updated successfully");
+      toast.success("profile picture updated successfully");
       fetchUserProfile();
     } catch (error) {
-      console.error("Error uploading avatar", error);
-      toast.error("Error uploading avatar");
+      console.error("Error uploading profile picture", error);
+      toast.error("Error uploading profile picture");
     } finally {
       setAvatarUploading(false);
     }
@@ -139,10 +139,10 @@ const Profile = () => {
         },
       });
       setUser((prevUser) => ({ ...prevUser, avatar: null }));
-      toast.success("Avatar deleted successfully");
+      toast.success("rofile picture deleted successfully");
     } catch (error) {
-      console.error("Error deleting avatar", error);
-      toast.error("Error deleting avatar");
+      console.error("Error deleting rofile picture", error);
+      toast.error("Error deleting rofile picture");
     }
   };
 

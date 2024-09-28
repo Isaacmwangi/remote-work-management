@@ -1,5 +1,3 @@
-// src/routes/Router.jsx
-
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -55,7 +53,7 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
 const AuthenticatedRoute = () => {
   const { isAuthenticated } = useAuth();
   
-  return isAuthenticated ? <Dashboard /> : <Home />;
+  return isAuthenticated ? <Dashboard /> : <Home />; // Redirect to dashboard if logged in, else home
 };
 
 const AppRouter = () => {
@@ -64,7 +62,6 @@ const AppRouter = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<AuthenticatedRoute />} />
-          <Route path="/dashboard" element={<ProtectedRoute element={Dashboard} />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
